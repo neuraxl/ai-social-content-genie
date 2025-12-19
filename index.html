@@ -1,68 +1,97 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Social Content Genie</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-body { font-family: Inter, system-ui, sans-serif; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | AI Social Content Genie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/.../6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-slate-100 min-h-screen flex items-center justify-center p-6">
-<div class="bg-white max-w-3xl w-full rounded-3xl shadow-xl p-8 space-y-6">
-  <!-- HEADER -->
-  <div class="flex justify-between items-center">
-    <h1 id="title" class="text-3xl font-extrabold text-indigo-600">🧞‍♂️ AI Content Genie</h1>
-    <button onclick="toggleLang()" class="text-sm font-bold text-indigo-600 border px-3 py-1 rounded-full">FR / EN</button>
-  </div>
-  <p id="subtitle" class="text-slate-600">L’IA écrit vos contenus pour les réseaux sociaux.</p>
-  <textarea id="prompt" rows="5" class="w-full p-4 border rounded-xl focus:ring-2 focus:ring-indigo-300" placeholder="Ex : 5 astuces pour mieux vendre sur LinkedIn..."></textarea>
-  <div class="grid grid-cols-2 gap-4">
-    <select id="platform" class="p-3 border rounded-xl">
-      <option value="LinkedIn">LinkedIn</option>
-      <option value="Instagram">Instagram</option>
-      <option value="TikTok">TikTok</option>
-    </select>
-    <select id="tone" class="p-3 border rounded-xl">
-      <option value="Professionnel">Professionnel</option>
-      <option value="Inspirant">Inspirant</option>
-      <option value="Humoristique">Humoristique</option>
-    </select>
-  </div>
-  <button onclick="generate()" class="w-full py-4 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition">
-    ✨ Générer le contenu
-  </button>
-  <div id="output" class="bg-slate-50 p-6 rounded-xl border italic text-slate-600 min-h-[150px]">
-    Votre contenu apparaîtra ici…
-  </div>
-  <p class="text-xs text-center text-slate-400">Version gratuite — Généré par AI Genie</p>
-</div>
-<script>
-let lang = "fr";
-const texts = {
-  fr: {
-    subtitle: "L’IA écrit vos contenus pour les réseaux sociaux.",
-    placeholder: "Ex : 5 astuces pour mieux vendre sur LinkedIn...",
-    loading: "Le génie réfléchit…"
-  },
-  en: {
-    subtitle: "AI writes your social media content for you.",
-    placeholder: "Ex: 5 tips to grow on LinkedIn...",
-    loading: "The genie is thinking…"
-  }
-};
-function toggleLang() {
-  lang = lang === "fr" ? "en" : "fr";
-  document.getElementById("subtitle").innerText = texts[lang].subtitle;
-  document.getElementById("prompt").placeholder = texts[lang].placeholder;
-}
-async function generate() {
-  const prompt = document.getElementById("prompt").value;
-  const platform = document.getElementById("platform").value;
-  const tone = document.getElementById("tone").value;
-  const out = document.getElementById("output");
-  if (!prompt) return alert(lang === "fr" ? "Entre un sujet 🙂" : "Enter a topic 🙂");
-  out.innerText = texts[lang].loading;
-  try {
-    const res =
+<body class="bg-slate-100 min-h-screen flex">
+    <aside class="w-64 bg-indigo-900 text-white hidden md:flex flex-col">
+        <div class="p-6 text-2xl font-bold border-b border-indigo-800">🧞‍♂️ AI Genie</div>
+        <nav class="flex-1 p-4 space-y-2">
+            <a href="#" class="block p-3 bg-indigo-800 rounded-lg"><i class="fa-solid fa-magic-wand-sparkles mr-2"></i> Générateur</a>
+            <a href="#" class="block p-3 hover:bg-indigo-800 rounded-lg opacity-60"><i class="fa-solid fa-calendar mr-2"></i> Planning</a>
+            <a href="#" class="block p-3 hover:bg-indigo-800 rounded-lg opacity-60"><i class="fa-solid fa-chart-line mr-2"></i> Analytics</a>
+        </nav>
+        <div class="p-4 border-t border-indigo-800 text-sm opacity-70">Plan Premium Actif</div>
+    </aside>
+    <main class="flex-1 p-8">
+        <header class="flex justify-between items-center mb-10">
+            <h1 class="text-2xl font-bold text-slate-800">Créer un nouveau contenu</h1>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm font-medium text-slate-500">Crédits : ∞</span>
+                <div class="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center text-white font-bold">JD</div>
+            </div>
+        </header>
+        <div class="grid lg:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <label class="block text-sm font-bold text-slate-700 mb-2">De quoi doit parler votre post ?</label>
+                <textarea id="prompt" rows="4" class="w-full p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none mb-4" placeholder="Ex: Les 3 bienfaits du café pour les développeurs..."></textarea>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Réseau Social</label>
+                        <select id="platform" class="w-full p-3 border border-slate-200 rounded-lg">
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="TikTok">TikTok</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Ton</label>
+                        <select id="tone" class="w-full p-3 border border-slate-200 rounded-lg">
+                            <option value="Pro">Professionnel</option>
+                            <option value="Drôle">Humoristique</option>
+                            <option value="Inspirant">Inspirant</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="generateContent()" id="generateBtn" class="w-full py-4 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition">
+                    <i class="fa-solid fa-sparkles mr-2"></i> Générer avec l'IA
+                </button>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden">
+                <div id="loader" class="hidden absolute inset-0 bg-white/80 z-10 flex flex-col items-center justify-center">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+                    <p class="mt-4 font-medium text-indigo-600">Le Génie réfléchit...</p>
+                </div>
+                <div class="flex justify-between items-center mb-4 border-b pb-4">
+                    <h2 class="font-bold text-slate-700">Votre Publication</h2>
+                    <button onclick="copyContent()" class="text-indigo-600 text-sm font-bold hover:underline"><i class="fa-regular fa-copy"></i> Copier</button>
+                </div>
+                <div id="output" class="text-slate-600 leading-relaxed whitespace-pre-wrap italic">
+                    Le résultat de votre génération apparaîtra ici...
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        function generateContent() {
+            const prompt = document.getElementById('prompt').value;
+            const platform = document.getElementById('platform').value;
+            const tone = document.getElementById('tone').value;
+            const output = document.getElementById('output');
+            const loader = document.getElementById('loader');
+            if (!prompt) return alert("Veuillez entrer une idée !");
+            loader.classList.remove('hidden');
+            // Simulation de l'appel API IA
+            setTimeout(() => {
+                const results = {
+                    LinkedIn: `🚀 DÉCRYPTAGE : ${prompt}\n\nLe monde change et nous aussi. En tant qu'experts, nous devons comprendre que le ton ${tone} est la clé du succès sur cette plateforme.\n\nQu'en pensez-vous ? 👇\n\n#Expertise #Innovation #Success`,
+                    Instagram: `✨ Moment ${tone} ! ✨\n\n${prompt}\n\nTag un ami qui a besoin d'entendre ça aujourd'hui ! 🤳\n.\n.\n#Vibes #Mindset #Trending #InstaDaily`,
+                    TikTok: `[HOOK] : Tu ne croiras jamais pourquoi ${prompt} !\n\n[STORY] : (Montrer un POV ${tone})\n\n[CTA] : Abonne-toi pour la partie 2 ! ✌️\n\n#FYP #Viral #LifeHack`
+                };
+                output.innerText = results[platform];
+                output.classList.remove('italic');
+                loader.classList.add('hidden');
+            }, 1500);
+        }
+        function copyContent() {
+            const text = document.getElementById('output').innerText;
+            navigator.clipboard.writeText(text);
+            alert("Contenu copié dans le presse-papier !");
+        }
+    </script>
+</body>
+</html>
