@@ -65,22 +65,4 @@ async function generate() {
   if (!prompt) return alert(lang === "fr" ? "Entre un sujet 🙂" : "Enter a topic 🙂");
   out.innerText = texts[lang].loading;
   try {
-    const res =<script>
-let lang = "fr";
-async function generate() {
-  const prompt = document.getElementById("prompt").value;
-  const platform = document.getElementById("platform").value;
-  const tone = document.getElementById("tone").value;
-  const out = document.getElementById("output");
-  if (!prompt) return alert("Entre un sujet 🙂");
-  out.innerText = lang === "fr" ? "Le génie réfléchit…" : "The genie is thinking…";
-  const res = await fetch("/api/generate", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ prompt, platform, tone, lang })
-  });
-  const data = await res.json();
-  out.innerText = data.text;
-  out.classList.remove("italic");
-}
-</script>
+    const res =
