@@ -1,6 +1,299 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wait Silver Trade .ca — Tracker de Primes Métaux Précieux</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C; --gold-light: #E8C96A; --gold-dark: #8B6914;
+    --bg: #0A0A0A; --bg2: #111111; --bg3: #181818;
+    --border: #2A2A2A; --text: #F0EAD6; --text-muted: #7A7060;
+    --green: #4CAF7A; --red: #CF6679; --yellow: #E8C96A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; min-height: 100vh; overflow-x: hidden; }
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background: radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.03) 0%, transparent 50%);
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; position: relative; z-index: 1; }
+
+  header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px; padding-bottom: 22px; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 18px; }
+  .logo-area h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 600; background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1; }
+  .logo-area p { color: var(--text-muted); font-size: 0.67rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 4px; }
+  
+  .spot-badge { text-align: right; }
+  .spot-badge .label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+  .spot-price { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold-light); }
+  .spot-sub { font-size: 0.61rem; color: var(--text-muted); margin-top: 3px; }
+
+  .status-bar { display: flex; align-items: center; gap: 16px; padding: 9px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 22px; font-size: 0.61rem; color: var(--text-muted); letter-spacing: 0.07em; flex-wrap: wrap; }
+  .status-item { display: flex; align-items: center; gap: 5px; }
+  .sdot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .sdot.live { background: var(--green); animation: pulse 2s infinite; }
+  .sdot.loading { background: var(--yellow); animation: pulse 0.8s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
+  .sval { color: var(--text); font-weight: 500; }
+  .last-update { margin-left: auto; font-size: 0.57rem; color: var(--text-muted); }
+
+  .controls { display: flex; gap: 10px; margin-bottom: 24px; align-items: center; flex-wrap: wrap; }
+  .control-group { display: flex; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .ctrl-btn { background: var(--bg2); border: none; color: var(--text-muted); padding: 7px 13px; font-family: 'DM Mono', monospace; font-size: 0.67rem; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; transition: all .2s; border-right: 1px solid var(--border); }
+  .ctrl-btn:last-child { border-right: none; }
+  .ctrl-btn:hover { background: var(--bg3); color: var(--text); }
+  .ctrl-btn.active { background: var(--gold-dark); color: var(--gold-light); }
+  
+  .refresh-btn { margin-left: auto; background: transparent; border: 1px solid var(--gold-dark); color: var(--gold); padding: 7px 16px; font-family: 'DM Mono', monospace; font-size: 0.67rem; letter-spacing: 0.09em; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: all .25s; display: flex; align-items: center; gap: 5px; }
+  .spinning .spin-icon { animation: spin .7s linear infinite; }
+  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+  .chart-container { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 26px 26px 18px; margin-bottom: 24px; position: relative; overflow: hidden; }
+  .chart-title { font-family: 'Cormorant Garamond', serif; font-size: 0.98rem; color: var(--text-muted); letter-spacing: .05em; margin-bottom: 18px; text-transform: uppercase; }
+  .chart-title span { color: var(--gold-light); }
+  
+  .bars-wrapper { display: flex; align-items: flex-end; gap: 12px; height: 180px; padding-bottom: 40px; position: relative; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; }
+  .bar { width: 100%; max-width: 50px; border-radius: 2px 2px 0 0; transition: height .8s ease, background .2s; background: var(--gold-dark); }
+  .bar-label { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 0.55rem; color: var(--text-muted); text-align: center; white-space: nowrap; }
+
+  .table-section { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 24px; }
+  .table-header { display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr 0.8fr; padding: 12px 20px; border-bottom: 1px solid var(--border); background: var(--bg3); }
+  .th { font-size: .57rem; letter-spacing: .17em; text-transform: uppercase; color: var(--text-muted); }
+  .table-row { display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr 0.8fr; padding: 14px 20px; border-bottom: 1px solid var(--border); align-items: center; }
+  .td { font-size: .74rem; }
+  .td.price { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--text); font-weight: 600; }
+  .td.prem-p { color: var(--gold-light); }
+
+  .best-deal { background: linear-gradient(135deg, rgba(201,168,76,.15), rgba(201,168,76,.05)); border: 1px solid var(--gold-dark); border-radius: 8px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 24px; }
+  .bdl { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .bdn { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; }
+  .bds { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--green); text-align: right; }
+  .bds small { font-size: .62rem; font-family: 'DM Mono', monospace; color: var(--text-muted); display: block; }
+
+  .loading-overlay { position: absolute; inset: 0; background: rgba(10,10,10,0.85); display: flex; align-items: center; justify-content: center; z-index: 20; color: var(--gold); font-size: 0.8rem; letter-spacing: 0.1em; }
+  .hidden { display: none !important; }
+
+  @media(max-width:768px) {
+    .table-header, .table-row { grid-template-columns: 1.5fr 1.2fr 0.8fr; }
+    .th:nth-child(3), .td:nth-child(3), .th:nth-child(4), .td:nth-child(4) { display: none; }
+    header { flex-direction: column; align-items: flex-start; }
+    .spot-badge { text-align: left; }
+    .spot-badge .label { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo-area">
+      <h1>Wait Silver Trade .ca</h1>
+      <p>Expertise en métaux précieux · Canada 🍁</p>
+    </div>
+    <div class="spot-badge">
+      <div class="label"><span id="spotDot" class="sdot loading"></span> Flux Temps Réel</div>
+      <div class="spot-price" id="spotDisplay">Sync...</div>
+      <div class="spot-sub" id="spotCurrency">XAU/CAD · 1 oz Troy</div>
+    </div>
+  </header>
+
+  <div class="status-bar">
+    <div class="status-item"><span class="sdot" id="apiDot"></span> Sync: <span class="sval" id="apiStatus">Recherche...</span></div>
+    <div class="status-item"><span class="sdot" id="fxDot"></span> USD/CAD: <span class="sval" id="fxRate">—</span></div>
+    <div class="status-item">Index USD: <span class="sval" id="xauUSD">—</span></div>
+    <div class="last-update" id="lastUpdate">Dernière vérification: —</div>
+  </div>
+
+  <div class="controls">
+    <div class="control-group">
+      <button id="btn-maple" class="ctrl-btn active" onclick="setProduct('maple')">🍁 Maple Leaf</button>
+      <button id="btn-bar" class="ctrl-btn" onclick="setProduct('bar')">⬜ Lingot</button>
+      <button id="btn-silver" class="ctrl-btn" onclick="setProduct('silver')">🔘 Argent</button>
+    </div>
+    <div class="control-group">
+      <button id="btn-1oz" class="ctrl-btn active" onclick="setSize('1oz')">1 oz</button>
+      <button id="btn-05oz" class="ctrl-btn" onclick="setSize('0.5oz')">½ oz</button>
+      <button id="btn-025oz" class="ctrl-btn" onclick="setSize('0.25oz')">¼ oz</button>
+    </div>
+    <button class="refresh-btn" id="refreshBtn" onclick="fetchAllData()">
+      <span class="spin-icon">↺</span> Actualiser
+    </button>
+  </div>
+
+  <div class="chart-container">
+    <div id="chartLoading" class="loading-overlay">Initialisation Wait Silver Trade...</div>
+    <div class="chart-title">Analyse Comparative des Primes (%) — <span id="chartSubtitle">Maple Leaf 1 oz</span></div>
+    <div class="bars-wrapper" id="barsWrapper"></div>
+  </div>
+
+  <div class="best-deal" id="bestDealSection" style="display:none">
+    <div>
+      <div class="bdl">✦ Top Sélection Wait Silver Trade</div>
+      <div class="bdn" id="bestDealName">—</div>
+    </div>
+    <div class="bds">
+      <span id="bestDealSaving">$0</span>
+      <small>Gain estimé vs. moyenne marché</small>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <div class="table-header">
+      <div class="th">Marchand</div>
+      <div class="th">Total (CAD)</div>
+      <div class="th">Prime ($)</div>
+      <div class="th">Markup (%)</div>
+      <div class="th">Action</div>
+    </div>
+    <div id="tableBody"></div>
+  </div>
+
+  <footer>
+    <p>© 2025 Wait Silver Trade .ca — Tous droits réservés.</p>
+    <p>Données indexées via gold-api.com & Frankfurter API (BCE)</p>
+    <p style="margin-top: 8px; opacity: 0.6;">Les prix sont indicatifs et basés sur des modes de paiement cash/virement.</p>
+  </footer>
+</div>
+
+<script>
+// Configuration des marchands canadiens et leurs primes moyennes estimées
+const DEALERS = [
+  { name: 'Silver Gold Bull', short: 'SGB', url: 'https://silvergoldbull.ca', prem: { maple:{'1oz':3.1, '0.5oz':4.5, '0.25oz':6.1}, bar:{'1oz':2.6, '0.5oz':3.8}, silver:{'1oz':11.2} } },
+  { name: 'Kitco', short: 'KTC', url: 'https://online.kitco.com', prem: { maple:{'1oz':3.9, '0.5oz':5.4, '0.25oz':7.1}, bar:{'1oz':3.1, '0.5oz':4.4}, silver:{'1oz':13.4} } },
+  { name: 'Border Gold', short: 'BDR', url: 'https://bordergold.com', prem: { maple:{'1oz':3.7, '0.5oz':5.1, '0.25oz':6.8}, bar:{'1oz':2.9, '0.5oz':4.2}, silver:{'1oz':13.0} } },
+  { name: 'TD Bank Precious Metals', short: 'TD', url: 'https://preciousmetals.td.com', prem: { maple:{'1oz':6.4, '0.5oz':8.1, '0.25oz':10.1}, bar:{'1oz':5.0, '0.5oz':6.4}, silver:{'1oz':18.1} } }
+];
+
+let state = { spotUSD: 0, usdCad: 0, spotCAD: 0, product: 'maple', size: '1oz' };
+
+async function fetchAllData() {
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+  document.getElementById('chartLoading').classList.remove('hidden');
+
+  try {
+    const symbol = state.product === 'silver' ? 'XAG' : 'XAU';
+    const [spotRes, fxRes] = await Promise.all([
+      fetch(`https://api.gold-api.com/price/${symbol}`).then(r => r.json()),
+      fetch('https://api.frankfurter.app/latest?from=USD&to=CAD').then(r => r.json())
+    ]);
+
+    state.spotUSD = spotRes.price;
+    state.usdCad = fxRes.rates.CAD;
+    state.spotCAD = state.spotUSD * state.usdCad;
+
+    updateUI();
+  } catch (err) {
+    console.error("Erreur de synchronisation:", err);
+    document.getElementById('apiStatus').innerText = "Hors ligne";
+  } finally {
+    btn.classList.remove('spinning');
+    document.getElementById('chartLoading').classList.add('hidden');
+  }
+}
+
+function updateUI() {
+  const mult = { '1oz': 1, '0.5oz': 0.5, '0.25oz': 0.25 }[state.size];
+  const spotForSize = state.spotCAD * mult;
+  const symbolLabel = state.product === 'silver' ? 'Argent' : 'Or';
+
+  document.getElementById('spotDisplay').innerText = `$${state.spotCAD.toLocaleString('fr-CA', {minimumFractionDigits:2})} CAD`;
+  document.getElementById('spotCurrency').innerText = `${symbolLabel}/CAD · 1 oz Troy`;
+  document.getElementById('xauUSD').innerText = `$${state.spotUSD.toFixed(2)}`;
+  document.getElementById('fxRate').innerText = state.usdCad.toFixed(4);
+  document.getElementById('apiStatus').innerText = "Wait Sync OK";
+  document.getElementById('apiDot').className = "sdot live";
+  document.getElementById('fxDot').className = "sdot live";
+  document.getElementById('spotDot').className = "sdot live";
+  document.getElementById('lastUpdate').innerText = `Dernière vérif: ${new Date().toLocaleTimeString('fr-CA')}`;
+  
+  const productLabels = { maple: 'Maple Leaf', bar: 'Lingot', silver: 'Argent Maple' };
+  document.getElementById('chartSubtitle').innerText = `${productLabels[state.product]} ${state.size}`;
+
+  const results = DEALERS.map(d => {
+    const pPercent = d.prem[state.product]?.[state.size];
+    if (!pPercent) return null;
+    const pDollar = spotForSize * (pPercent / 100);
+    const total = spotForSize + pDollar;
+    return { ...d, pPercent, pDollar, total };
+  }).filter(Boolean).sort((a, b) => a.total - b.total);
+
+  renderTable(results);
+  renderChart(results);
+  renderBest(results);
+}
+
+function renderTable(data) {
+  const body = document.getElementById('tableBody');
+  body.innerHTML = data.map(d => `
+    <div class="table-row">
+      <div class="td"><strong>${d.name}</strong></div>
+      <div class="td price">$${d.total.toFixed(2)}</div>
+      <div class="td">$${d.pDollar.toFixed(2)}</div>
+      <div class="td prem-p">+${d.pPercent}%</div>
+      <div class="td"><a href="${d.url}" class="ctrl-btn" style="font-size:0.55rem; text-decoration:none;" target="_blank">ALLER</a></div>
+    </div>
+  `).join('');
+}
+
+function renderChart(data) {
+  const wrapper = document.getElementById('barsWrapper');
+  const maxPrem = Math.max(...data.map(d => d.pPercent)) * 1.2;
+  
+  wrapper.innerHTML = data.map(d => {
+    const h = (d.pPercent / maxPrem) * 100;
+    return `
+      <div class="bar-col">
+        <div class="bar" style="height: ${h}%"></div>
+        <div class="bar-label">${d.short}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderBest(data) {
+  if (data.length < 2) return;
+  const best = data[0];
+  const average = data.reduce((acc, curr) => acc + curr.total, 0) / data.length;
+  
+  document.getElementById('bestDealSection').style.display = 'flex';
+  document.getElementById('bestDealName').innerText = best.name;
+  document.getElementById('bestDealSaving').innerText = `$${(average - best.total).toFixed(2)}`;
+}
+
+function setProduct(p) {
+  state.product = p;
+  // Gestion de la visibilité des tailles pour l'argent (souvent uniquement 1oz)
+  if(p === 'silver') setSize('1oz');
+  
+  document.querySelectorAll('.control-group button').forEach(b => b.classList.remove('active'));
+  document.getElementById(`btn-${p}`).classList.add('active');
+  document.getElementById(`btn-${state.size.replace('.','')}`).classList.add('active');
+  fetchAllData();
+}
+
+function setSize(s) {
+  state.size = s;
+  document.querySelectorAll('.control-group button').forEach(b => b.classList.remove('active'));
+  document.getElementById(`btn-${state.product}`).classList.add('active');
+  document.getElementById(`btn-${s.replace('.','')}`).classList.add('active');
+  updateUI();
+}
+
+window.onload = fetchAllData;
+</script>
+</body>
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L'Univers de NXU : Une Odyssée Technologique</title>
