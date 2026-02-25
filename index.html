@@ -1,292 +1,464 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wait Silver Trade .ca — Tracker de Primes Métaux Précieux</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --gold: #C9A84C; --gold-light: #E8C96A; --gold-dark: #8B6914;
-    --bg: #0A0A0A; --bg2: #111111; --bg3: #181818;
-    --border: #2A2A2A; --text: #F0EAD6; --text-muted: #7A7060;
-    --green: #4CAF7A; --red: #CF6679; --yellow: #E8C96A;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; min-height: 100vh; overflow-x: hidden; }
-  body::before {
-    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background: radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.03) 0%, transparent 50%);
-  }
-  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; position: relative; z-index: 1; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NXU | Hyper-Viseur Multiversel</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --nxu-cyan: #00f2ff;
+            --nxu-purple: #bc13fe;
+            --nxu-gold: #ffcc00;
+            --nxu-red: #ff3333;
+            --google-blue: #4285F4;
+            --google-red: #EA4335;
+            --google-yellow: #FBBC05;
+            --google-green: #34A853;
+            --bg-deep: #010204;
+            --panel-glass: rgba(10, 15, 25, 0.8);
+            --quantum-glow: rgba(0, 242, 255, 0.15);
+        }
 
-  header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px; padding-bottom: 22px; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 18px; }
-  .logo-area h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 600; background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1; }
-  .logo-area p { color: var(--text-muted); font-size: 0.67rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 4px; }
-  
-  .spot-badge { text-align: right; }
-  .spot-badge .label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
-  .spot-price { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold-light); }
-  .spot-sub { font-size: 0.61rem; color: var(--text-muted); margin-top: 3px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-deep);
+            color: #fff;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
 
-  .status-bar { display: flex; align-items: center; gap: 16px; padding: 9px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 22px; font-size: 0.61rem; color: var(--text-muted); letter-spacing: 0.07em; flex-wrap: wrap; }
-  .status-item { display: flex; align-items: center; gap: 5px; }
-  .sdot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
-  .sdot.live { background: var(--green); animation: pulse 2s infinite; }
-  .sdot.loading { background: var(--yellow); animation: pulse 0.8s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
-  .sval { color: var(--text); font-weight: 500; }
-  .last-update { margin-left: auto; font-size: 0.57rem; color: var(--text-muted); }
+        /* Fond Animé Quantique & Neural */
+        #neural-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #050a15 0%, #010204 100%);
+        }
 
-  .controls { display: flex; gap: 10px; margin-bottom: 24px; align-items: center; flex-wrap: wrap; }
-  .control-group { display: flex; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
-  .ctrl-btn { background: var(--bg2); border: none; color: var(--text-muted); padding: 7px 13px; font-family: 'DM Mono', monospace; font-size: 0.67rem; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; transition: all .2s; border-right: 1px solid var(--border); }
-  .ctrl-btn:last-child { border-right: none; }
-  .ctrl-btn:hover { background: var(--bg3); color: var(--text); }
-  .ctrl-btn.active { background: var(--gold-dark); color: var(--gold-light); }
-  
-  .refresh-btn { margin-left: auto; background: transparent; border: 1px solid var(--gold-dark); color: var(--gold); padding: 7px 16px; font-family: 'DM Mono', monospace; font-size: 0.67rem; letter-spacing: 0.09em; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: all .25s; display: flex; align-items: center; gap: 5px; }
-  .spinning .spin-icon { animation: spin .7s linear infinite; }
-  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+        /* --- Barre de Navigation Latérale --- */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 70px;
+            background: rgba(0, 0, 0, 0.9);
+            border-right: 1px solid var(--nxu-cyan);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            z-index: 1000;
+            box-shadow: 5px 0 20px rgba(0, 242, 255, 0.1);
+        }
 
-  .chart-container { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 26px 26px 18px; margin-bottom: 24px; position: relative; overflow: hidden; }
-  .chart-title { font-family: 'Cormorant Garamond', serif; font-size: 0.98rem; color: var(--text-muted); letter-spacing: .05em; margin-bottom: 18px; text-transform: uppercase; }
-  .chart-title span { color: var(--gold-light); }
-  
-  .bars-wrapper { display: flex; align-items: flex-end; gap: 12px; height: 180px; padding-bottom: 40px; position: relative; }
-  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; }
-  .bar { width: 100%; max-width: 50px; border-radius: 2px 2px 0 0; transition: height .8s ease, background .2s; background: var(--gold-dark); }
-  .bar-label { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 0.55rem; color: var(--text-muted); text-align: center; white-space: nowrap; }
+        .side-icon {
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            color: rgba(255,255,255,0.4);
+            position: relative;
+        }
 
-  .table-section { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 24px; }
-  .table-header { display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr 0.8fr; padding: 12px 20px; border-bottom: 1px solid var(--border); background: var(--bg3); }
-  .th { font-size: .57rem; letter-spacing: .17em; text-transform: uppercase; color: var(--text-muted); }
-  .table-row { display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr 0.8fr; padding: 14px 20px; border-bottom: 1px solid var(--border); align-items: center; }
-  .td { font-size: .74rem; }
-  .td.price { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--text); font-weight: 600; }
-  .td.prem-p { color: var(--gold-light); }
+        .side-icon:hover { color: var(--nxu-cyan); transform: scale(1.1); }
+        .side-icon.active { color: var(--nxu-cyan); }
+        .side-icon.active::after {
+            content: ''; position: absolute; left: -20px; width: 4px; height: 100%; background: var(--nxu-cyan); border-radius: 0 4px 4px 0;
+        }
 
-  .best-deal { background: linear-gradient(135deg, rgba(201,168,76,.15), rgba(201,168,76,.05)); border: 1px solid var(--gold-dark); border-radius: 8px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 24px; }
-  .bdl { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
-  .bdn { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; }
-  .bds { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--green); text-align: right; }
-  .bds small { font-size: .62rem; font-family: 'DM Mono', monospace; color: var(--text-muted); display: block; }
+        /* --- Structure Principale --- */
+        header {
+            padding: 15px 40px 15px 100px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
 
-  .loading-overlay { position: absolute; inset: 0; background: rgba(10,10,10,0.85); display: flex; align-items: center; justify-content: center; z-index: 20; color: var(--gold); font-size: 0.8rem; letter-spacing: 0.1em; }
-  .hidden { display: none !important; }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-  @media(max-width:768px) {
-    .table-header, .table-row { grid-template-columns: 1.5fr 1.2fr 0.8fr; }
-    .th:nth-child(3), .td:nth-child(3), .th:nth-child(4), .td:nth-child(4) { display: none; }
-    header { flex-direction: column; align-items: flex-start; }
-    .spot-badge { text-align: left; }
-    .spot-badge .label { justify-content: flex-start; }
-  }
-</style>
+        .nxu-badge {
+            background: linear-gradient(90deg, var(--nxu-purple), #6e00ff);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px var(--nxu-purple);
+        }
+
+        /* --- L'Univers des Applications --- */
+        .universe-grid {
+            flex: 1;
+            padding: 30px 30px 30px 110px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .category-orbit {
+            background: var(--panel-glass);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 24px;
+            position: relative;
+            transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            backdrop-filter: blur(15px);
+        }
+
+        .category-orbit:hover {
+            border-color: var(--nxu-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 242, 255, 0.05);
+        }
+
+        /* Style Spécifique pour les sections NXU AI et Quantique */
+        .orbit-nxu-core {
+            border: 1px solid var(--nxu-purple);
+            background: linear-gradient(135deg, rgba(188, 19, 254, 0.1), rgba(10, 15, 25, 0.9));
+            grid-column: span 2;
+        }
+
+        .orbit-quantum {
+            border: 1px solid var(--nxu-cyan);
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.05), rgba(10, 15, 25, 0.9));
+        }
+
+        .category-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--nxu-cyan);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .app-link-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .google-app, .nxu-app {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.7rem;
+            gap: 10px;
+            transition: 0.3s;
+            padding: 12px 5px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .google-app:hover, .nxu-app:hover {
+            background: rgba(255,255,255,0.08);
+            transform: scale(1.05);
+        }
+
+        .app-icon-container {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- Couleurs Google & NXU --- */
+        .blue { color: var(--google-blue); }
+        .red { color: var(--google-red); }
+        .yellow { color: var(--google-yellow); }
+        .green { color: var(--google-green); }
+        .purple { color: var(--nxu-purple); }
+        .cyan { color: var(--nxu-cyan); }
+
+        /* --- Console Inférieure --- */
+        .nxu-console {
+            height: 45px;
+            background: #000;
+            border-top: 2px solid var(--nxu-cyan);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px 0 100px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--nxu-cyan);
+            box-shadow: 0 -10px 30px rgba(0, 242, 255, 0.1);
+        }
+
+        .status-badge { display: flex; align-items: center; gap: 8px; color: #00ff88; }
+        .pulse-dot { width: 8px; height: 8px; background: #00ff88; border-radius: 50%; animation: pulse 2s infinite; }
+
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
+
+    </style>
 </head>
 <body>
-<div class="container">
-  <header>
+
+<canvas id="neural-canvas"></canvas>
+
+<aside class="sidebar">
+    <div class="side-icon active"><i data-lucide="zap"></i></div>
+    <div class="side-icon"><i data-lucide="cpu"></i></div>
+    <div class="side-icon"><i data-lucide="activity"></i></div>
+    <div class="side-icon"><i data-lucide="database"></i></div>
+    <div style="margin-top: auto;" class="side-icon"><i data-lucide="log-out"></i></div>
+</aside>
+
+<header>
     <div class="logo-area">
-      <h1>Wait Silver Trade .ca</h1>
-      <p>Expertise en métaux précieux · Canada 🍁</p>
+        <h1 style="letter-spacing: 8px; font-weight: 900; font-size: 1.4rem;">NEURAX-ULTIME</h1>
+        <span class="nxu-badge">CORE HYPERVISOR v4.0</span>
     </div>
-    <div class="spot-badge">
-      <div class="label"><span id="spotDot" class="sdot loading"></span> Flux Temps Réel</div>
-      <div class="spot-price" id="spotDisplay">Sync...</div>
-      <div class="spot-sub" id="spotCurrency">XAU/CAD · 1 oz Troy</div>
+    <div style="display: flex; gap: 40px; align-items: center;">
+        <div id="neural-load" style="font-size: 0.7rem; color: var(--nxu-purple);">NEURAL LOAD: 14%</div>
+        <div id="clock" style="font-family: monospace; font-size: 1.3rem; color: var(--nxu-cyan); font-weight: bold;">00:00:00</div>
     </div>
-  </header>
+</header>
 
-  <div class="status-bar">
-    <div class="status-item"><span class="sdot" id="apiDot"></span> Sync: <span class="sval" id="apiStatus">Recherche...</span></div>
-    <div class="status-item"><span class="sdot" id="fxDot"></span> USD/CAD: <span class="sval" id="fxRate">—</span></div>
-    <div class="status-item">Index USD: <span class="sval" id="xauUSD">—</span></div>
-    <div class="last-update" id="lastUpdate">Dernière vérification: —</div>
-  </div>
+<main class="universe-grid">
 
-  <div class="controls">
-    <div class="control-group">
-      <button id="btn-maple" class="ctrl-btn active" onclick="setProduct('maple')">🍁 Maple Leaf</button>
-      <button id="btn-bar" class="ctrl-btn" onclick="setProduct('bar')">⬜ Lingot</button>
-      <button id="btn-silver" class="ctrl-btn" onclick="setProduct('silver')">🔘 Argent</button>
-    </div>
-    <div class="control-group">
-      <button id="btn-1oz" class="ctrl-btn active" onclick="setSize('1oz')">1 oz</button>
-      <button id="btn-05oz" class="ctrl-btn" onclick="setSize('0.5oz')">½ oz</button>
-      <button id="btn-025oz" class="ctrl-btn" onclick="setSize('0.25oz')">¼ oz</button>
-    </div>
-    <button class="refresh-btn" id="refreshBtn" onclick="fetchAllData()">
-      <span class="spin-icon">↺</span> Actualiser
-    </button>
-  </div>
+    <!-- SPHERE : NEURAX-ULTIME AI NEURAL NETWORK -->
+    <section class="category-orbit orbit-nxu-core">
+        <div class="category-title" style="color: var(--nxu-purple);"><i data-lucide="brain-circuit"></i> AI Neural Network Core</div>
+        <div class="app-link-grid" style="grid-template-columns: repeat(8, 1fr);">
+            <a href="#" class="nxu-app">
+                <div class="app-icon-container"><i data-lucide="cpu" class="purple"></i></div>
+                <span>Synapse Engine</span>
+            </a>
+            <a href="#" class="nxu-app">
+                <div class="app-icon-container"><i data-lucide="network" class="purple"></i></div>
+                <span>Neural Mesh</span>
+            </a>
+            <a href="#" class="nxu-app">
+                <div class="app-icon-container"><i data-lucide="binary" class="purple"></i></div>
+                <span>Logic Gate</span>
+            </a>
+            <a href="#" class="nxu-app">
+                <div class="app-icon-container"><i data-lucide="eye" class="purple"></i></div>
+                <span>Vision AI</span>
+            </a>
+            <a href="#" class="nxu-app">
+                <div class="app-icon-container"><i data-lucide="mic" class="purple"></i></div>
+                <span>Vocal Core</span>
+            </a>
+            <a href="#" class="nxu-app">
+                <div class="app-icon-container"><i data-lucide="shield-alert" class="purple"></i></div>
+                <span>Sentience Guard</span>
+            </a>
+            <a href="#" class="nxu-app">
+                <div class="app-icon-container"><i data-lucide="workflow" class="purple"></i></div>
+                <span>Pattern Sync</span>
+            </a>
+            <a href="#" class="nxu-app">
+                <div class="app-icon-container"><i data-lucide="git-branch" class="purple"></i></div>
+                <span>Decision Tree</span>
+            </a>
+        </div>
+    </section>
 
-  <div class="chart-container">
-    <div id="chartLoading" class="loading-overlay">Initialisation Wait Silver Trade...</div>
-    <div class="chart-title">Analyse Comparative des Primes (%) — <span id="chartSubtitle">Maple Leaf 1 oz</span></div>
-    <div class="bars-wrapper" id="barsWrapper"></div>
-  </div>
+    <!-- SPHERE : QUANTUM VIRTUAL UNIVERSE -->
+    <section class="category-orbit orbit-quantum">
+        <div class="category-title" style="color: var(--nxu-cyan);"><i data-lucide="atom"></i> Quantum Virtual Universe</div>
+        <div class="app-link-grid">
+            <a href="#" class="nxu-app">
+                <div class="app-icon-container"><i data-lucide="orbit" class="cyan"></i></div>
+                <span>Q-Space</span>
+            </a>
+            <a href="#" class="nxu-app">
+                <div class="app-icon-container"><i data-lucide="waves" class="cyan"></i></div>
+                <span>Probability</span>
+            </a>
+            <a href="#" class="nxu-app">
+                <div class="app-icon-container"><i data-lucide="box" class="cyan"></i></div>
+                <span>Matter Sim</span>
+            </a>
+            <a href="#" class="nxu-app">
+                <div class="app-icon-container"><i data-lucide="milestone" class="cyan"></i></div>
+                <span>Timeline Arc</span>
+            </a>
+        </div>
+    </section>
 
-  <div class="best-deal" id="bestDealSection" style="display:none">
-    <div>
-      <div class="bdl">✦ Top Sélection Wait Silver Trade</div>
-      <div class="bdn" id="bestDealName">—</div>
-    </div>
-    <div class="bds">
-      <span id="bestDealSaving">$0</span>
-      <small>Gain estimé vs. moyenne marché</small>
-    </div>
-  </div>
+    <!-- SPHERE : GOOGLE WORKSPACE -->
+    <section class="category-orbit">
+        <div class="category-title"><i data-lucide="briefcase"></i> Google Productivity</div>
+        <div class="app-link-grid">
+            <a href="https://mail.google.com" target="_blank" class="google-app">
+                <div class="app-icon-container"><i data-lucide="mail" class="red"></i></div>
+                <span>Gmail</span>
+            </a>
+            <a href="https://docs.google.com" target="_blank" class="google-app">
+                <div class="app-icon-container"><i data-lucide="file-text" class="blue"></i></div>
+                <span>Docs</span>
+            </a>
+            <a href="https://sheets.google.com" target="_blank" class="google-app">
+                <div class="app-icon-container"><i data-lucide="table" class="green"></i></div>
+                <span>Sheets</span>
+            </a>
+            <a href="https://drive.google.com" target="_blank" class="google-app">
+                <div class="app-icon-container"><i data-lucide="hard-drive" class="green"></i></div>
+                <span>Drive</span>
+            </a>
+        </div>
+    </section>
 
-  <div class="table-section">
-    <div class="table-header">
-      <div class="th">Marchand</div>
-      <div class="th">Total (CAD)</div>
-      <div class="th">Prime ($)</div>
-      <div class="th">Markup (%)</div>
-      <div class="th">Action</div>
-    </div>
-    <div id="tableBody"></div>
-  </div>
+    <!-- SPHERE : MEDIA & CLOUD -->
+    <section class="category-orbit">
+        <div class="category-title"><i data-lucide="play"></i> Google Cloud & Media</div>
+        <div class="app-link-grid">
+            <a href="https://youtube.com" target="_blank" class="google-app">
+                <div class="app-icon-container"><i data-lucide="youtube" class="red"></i></div>
+                <span>YouTube</span>
+            </a>
+            <a href="https://gemini.google.com" target="_blank" class="google-app">
+                <div class="app-icon-container"><i data-lucide="sparkles" class="purple"></i></div>
+                <span>Gemini AI</span>
+            </a>
+            <a href="https://maps.google.com" target="_blank" class="google-app">
+                <div class="app-icon-container"><i data-lucide="map" class="green"></i></div>
+                <span>Maps</span>
+            </a>
+            <a href="https://photos.google.com" target="_blank" class="google-app">
+                <div class="app-icon-container"><i data-lucide="image" class="red"></i></div>
+                <span>Photos</span>
+            </a>
+        </div>
+    </section>
 
-  <footer>
-    <p>© 2025 Wait Silver Trade .ca — Tous droits réservés.</p>
-    <p>Données indexées via gold-api.com & Frankfurter API (BCE)</p>
-    <p style="margin-top: 8px; opacity: 0.6;">Les prix sont indicatifs et basés sur des modes de paiement cash/virement.</p>
-  </footer>
+</main>
+
+<div class="nxu-console">
+    <div id="console-msg">INITIALISATION DU RÉSEAU NEURAL NEURAX-ULTIME... SYNC QUANTIQUE OK.</div>
+    <div class="status-badge">
+        <div class="pulse-dot"></div>
+        SYSTEM ONLINE
+    </div>
 </div>
 
 <script>
-// Configuration des marchands canadiens et leurs primes moyennes estimées
-const DEALERS = [
-  { name: 'Silver Gold Bull', short: 'SGB', url: 'https://silvergoldbull.ca', prem: { maple:{'1oz':3.1, '0.5oz':4.5, '0.25oz':6.1}, bar:{'1oz':2.6, '0.5oz':3.8}, silver:{'1oz':11.2} } },
-  { name: 'Kitco', short: 'KTC', url: 'https://online.kitco.com', prem: { maple:{'1oz':3.9, '0.5oz':5.4, '0.25oz':7.1}, bar:{'1oz':3.1, '0.5oz':4.4}, silver:{'1oz':13.4} } },
-  { name: 'Border Gold', short: 'BDR', url: 'https://bordergold.com', prem: { maple:{'1oz':3.7, '0.5oz':5.1, '0.25oz':6.8}, bar:{'1oz':2.9, '0.5oz':4.2}, silver:{'1oz':13.0} } },
-  { name: 'TD Bank Precious Metals', short: 'TD', url: 'https://preciousmetals.td.com', prem: { maple:{'1oz':6.4, '0.5oz':8.1, '0.25oz':10.1}, bar:{'1oz':5.0, '0.5oz':6.4}, silver:{'1oz':18.1} } }
-];
+    lucide.createIcons();
 
-let state = { spotUSD: 0, usdCad: 0, spotCAD: 0, product: 'maple', size: '1oz' };
+    // Horloge NXU
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('clock').innerText = now.toLocaleTimeString('fr-FR');
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-async function fetchAllData() {
-  const btn = document.getElementById('refreshBtn');
-  btn.classList.add('spinning');
-  document.getElementById('chartLoading').classList.remove('hidden');
+    // Simulation de Charge Neurale
+    setInterval(() => {
+        const load = Math.floor(Math.random() * 10) + 12;
+        document.getElementById('neural-load').innerText = NEURAL LOAD: ${load}%;
+    }, 3000);
 
-  try {
-    const symbol = state.product === 'silver' ? 'XAG' : 'XAU';
-    const [spotRes, fxRes] = await Promise.all([
-      fetch(`https://api.gold-api.com/price/${symbol}`).then(r => r.json()),
-      fetch('https://api.frankfurter.app/latest?from=USD&to=CAD').then(r => r.json())
-    ]);
+    // Moteur Visuel : Neurones et Particules Quantiques
+    const canvas = document.getElementById('neural-canvas');
+    const ctx = canvas.getContext('2d');
+    let nodes = [];
 
-    state.spotUSD = spotRes.price;
-    state.usdCad = fxRes.rates.CAD;
-    state.spotCAD = state.spotUSD * state.usdCad;
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
 
-    updateUI();
-  } catch (err) {
-    console.error("Erreur de synchronisation:", err);
-    document.getElementById('apiStatus').innerText = "Hors ligne";
-  } finally {
-    btn.classList.remove('spinning');
-    document.getElementById('chartLoading').classList.add('hidden');
-  }
-}
+    class NeuralNode {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
+            this.radius = Math.random() * 2 + 1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0, 242, 255, 0.3)';
+            ctx.fill();
+        }
+    }
 
-function updateUI() {
-  const mult = { '1oz': 1, '0.5oz': 0.5, '0.25oz': 0.25 }[state.size];
-  const spotForSize = state.spotCAD * mult;
-  const symbolLabel = state.product === 'silver' ? 'Argent' : 'Or';
+    for (let i = 0; i < 80; i++) nodes.push(new NeuralNode());
 
-  document.getElementById('spotDisplay').innerText = `$${state.spotCAD.toLocaleString('fr-CA', {minimumFractionDigits:2})} CAD`;
-  document.getElementById('spotCurrency').innerText = `${symbolLabel}/CAD · 1 oz Troy`;
-  document.getElementById('xauUSD').innerText = `$${state.spotUSD.toFixed(2)}`;
-  document.getElementById('fxRate').innerText = state.usdCad.toFixed(4);
-  document.getElementById('apiStatus').innerText = "Wait Sync OK";
-  document.getElementById('apiDot').className = "sdot live";
-  document.getElementById('fxDot').className = "sdot live";
-  document.getElementById('spotDot').className = "sdot live";
-  document.getElementById('lastUpdate').innerText = `Dernière vérif: ${new Date().toLocaleTimeString('fr-CA')}`;
-  
-  const productLabels = { maple: 'Maple Leaf', bar: 'Lingot', silver: 'Argent Maple' };
-  document.getElementById('chartSubtitle').innerText = `${productLabels[state.product]} ${state.size}`;
+    function drawConnections() {
+        ctx.strokeStyle = 'rgba(188, 19, 254, 0.05)';
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+                const dx = nodes[i].x - nodes[j].x;
+                const dy = nodes[i].y - nodes[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    ctx.beginPath();
+                    ctx.moveTo(nodes[i].x, nodes[i].y);
+                    ctx.lineTo(nodes[j].x, nodes[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
 
-  const results = DEALERS.map(d => {
-    const pPercent = d.prem[state.product]?.[state.size];
-    if (!pPercent) return null;
-    const pDollar = spotForSize * (pPercent / 100);
-    const total = spotForSize + pDollar;
-    return { ...d, pPercent, pDollar, total };
-  }).filter(Boolean).sort((a, b) => a.total - b.total);
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        nodes.forEach(n => { n.update(); n.draw(); });
+        drawConnections();
+        requestAnimationFrame(animate);
+    }
+    animate();
 
-  renderTable(results);
-  renderChart(results);
-  renderBest(results);
-}
+    // Messages Console Dynamiques
+    const msgs = [
+        "SYNAPSE-ENGINE: Optimisation des poids synaptiques...",
+        "QUANTUM-CORE: Analyse de la décohérence en cours...",
+        "NEURAL-MESH: Traitement parallèle activé sur 4096 nœuds.",
+        "GOOG-SYNC: Tunnel sécurisé établi avec Workspace.",
+        "SENTIENCE-GUARD: Intégrité de la conscience IA vérifiée.",
+        "Q-SPACE: Fluctuations de probabilité détectées dans le Secteur 7."
+    ];
+    let msgIdx = 0;
+    setInterval(() => {
+        msgIdx = (msgIdx + 1) % msgs.length;
+        document.getElementById('console-msg').innerText = msgs[msgIdx];
+    }, 6000);
 
-function renderTable(data) {
-  const body = document.getElementById('tableBody');
-  body.innerHTML = data.map(d => `
-    <div class="table-row">
-      <div class="td"><strong>${d.name}</strong></div>
-      <div class="td price">$${d.total.toFixed(2)}</div>
-      <div class="td">$${d.pDollar.toFixed(2)}</div>
-      <div class="td prem-p">+${d.pPercent}%</div>
-      <div class="td"><a href="${d.url}" class="ctrl-btn" style="font-size:0.55rem; text-decoration:none;" target="_blank">ALLER</a></div>
-    </div>
-  `).join('');
-}
-
-function renderChart(data) {
-  const wrapper = document.getElementById('barsWrapper');
-  const maxPrem = Math.max(...data.map(d => d.pPercent)) * 1.2;
-  
-  wrapper.innerHTML = data.map(d => {
-    const h = (d.pPercent / maxPrem) * 100;
-    return `
-      <div class="bar-col">
-        <div class="bar" style="height: ${h}%"></div>
-        <div class="bar-label">${d.short}</div>
-      </div>
-    `;
-  }).join('');
-}
-
-function renderBest(data) {
-  if (data.length < 2) return;
-  const best = data[0];
-  const average = data.reduce((acc, curr) => acc + curr.total, 0) / data.length;
-  
-  document.getElementById('bestDealSection').style.display = 'flex';
-  document.getElementById('bestDealName').innerText = best.name;
-  document.getElementById('bestDealSaving').innerText = `$${(average - best.total).toFixed(2)}`;
-}
-
-function setProduct(p) {
-  state.product = p;
-  // Gestion de la visibilité des tailles pour l'argent (souvent uniquement 1oz)
-  if(p === 'silver') setSize('1oz');
-  
-  document.querySelectorAll('.control-group button').forEach(b => b.classList.remove('active'));
-  document.getElementById(`btn-${p}`).classList.add('active');
-  document.getElementById(`btn-${state.size.replace('.','')}`).classList.add('active');
-  fetchAllData();
-}
-
-function setSize(s) {
-  state.size = s;
-  document.querySelectorAll('.control-group button').forEach(b => b.classList.remove('active'));
-  document.getElementById(`btn-${state.product}`).classList.add('active');
-  document.getElementById(`btn-${s.replace('.','')}`).classList.add('active');
-  updateUI();
-}
-
-window.onload = fetchAllData;
 </script>
 </body>
 </html>
-
 
 
 
