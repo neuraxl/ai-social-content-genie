@@ -3,39 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kiosque #17 - Cours des Métaux et Services</title>
+    <title>Kiosque #17 - Marché aux puces Jean-Talon</title>
     <style>
+        :root {
+            --bg-color: #0f1113;
+            --card-bg: rgba(30, 33, 37, 0.95);
+            --border-color: #31363c;
+            --gold: #f1c40f;
+            --silver: #bdc3c7;
+            --hockey: #00d2d3;
+            --eval: #ff9f43;
+            --red: #ff4757;
+            --text-main: #f1f2f6;
+            --text-muted: #a4b0be;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
+            line-height: 1.5;
         }
 
         /* Bande de défilement */
         .scrolling-banner {
             width: 100%;
             background-color: #000;
-            color: #fff;
+            border-bottom: 2px solid var(--border-color);
             padding: 12px 0;
             overflow: hidden;
-            white-space: nowrap;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.7);
-            margin-bottom: 25px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .scrolling-text {
             display: inline-block;
+            white-space: nowrap;
             padding-left: 100%;
             animation: scroll-left 25s linear infinite;
-            font-size: 1.3rem;
-            font-weight: bold;
+            font-size: 1.1rem;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
+            color: #fff;
         }
 
         @keyframes scroll-left {
@@ -44,233 +60,263 @@
         }
 
         .container {
-            width: 100%;
-            max-width: 1300px;
+            width: 95%;
+            max-width: 1400px;
             display: grid;
-            grid-template-columns: 1fr auto 1fr;
+            grid-template-columns: 1fr 350px 1fr;
             gap: 30px;
+            padding: 40px 20px;
             align-items: start;
-            padding: 0 20px;
         }
 
         .column {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 30px;
         }
 
+        /* Cartes de tableaux */
         .table-wrapper {
-            background: #2d2d2d;
-            padding: 18px;
-            border-radius: 10px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-            border: 1px solid #3d3d3d;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            margin: 0 0 20px 0;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 12px;
-        }
-
-        th, td {
-            padding: 14px;
-            text-align: left;
-            border-bottom: 1px solid #444;
+            border-collapse: separate;
+            border-spacing: 0;
         }
 
         th {
-            background-color: #383838;
-            font-size: 0.95rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 2px solid var(--border-color);
         }
 
-        /* Thèmes de couleurs par tableau */
-        .gold-header th { color: #ffd700; }
-        .silver-header th { color: #c0c0c0; }
-        .hockey-header th { color: #4ecdc4; }
-        .eval-header th { color: #ff9f43; }
-
-        tr:hover {
-            background-color: #3a3a3a;
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1rem;
         }
 
         .price {
-            font-weight: bold;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-weight: 600;
             text-align: right;
             color: #fff;
         }
 
-        /* Élément central clignotant */
-        #central-kiosk {
+        /* Bloc Central */
+        .center-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            font-size: 3rem;
+            padding-top: 40px;
+        }
+
+        #central-kiosk {
+            font-size: 3.5rem;
             font-weight: 900;
-            color: #ff0000;
+            color: var(--red);
             text-transform: uppercase;
-            padding: 30px 10px;
-            animation: blinker 0.8s linear infinite;
-            min-width: 280px;
-            text-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
-        }
-
-        @keyframes blinker {
-            50% { opacity: 0; }
-        }
-
-        .currency-tag {
-            font-size: 0.8rem;
-            color: #aaa;
-            margin-left: 6px;
-        }
-
-        h2 {
-            font-size: 1.4rem;
+            animation: blinker 1.2s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
+            line-height: 1;
             margin-bottom: 10px;
         }
 
-        @media (max-width: 1024px) {
+        .location-info {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
+        }
+
+        .kiosk-sub {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 15px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        @keyframes blinker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .currency-tag {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-left: 4px;
+        }
+
+        /* Couleurs spécifiques */
+        .gold-text { color: var(--gold); }
+        .silver-text { color: var(--silver); }
+        .hockey-text { color: var(--hockey); }
+        .eval-text { color: var(--eval); }
+
+        @media (max-width: 1100px) {
             .container {
                 grid-template-columns: 1fr;
             }
-            #central-kiosk {
+            .center-block {
                 order: -1;
-                margin-bottom: 15px;
-                font-size: 2.5rem;
+                padding-top: 0;
+                margin-bottom: 30px;
+            }
+            #central-kiosk {
+                font-size: 2.8rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Bande de défilement -->
     <div class="scrolling-banner">
         <div class="scrolling-text">
-            Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; Nous achetons la Monnaie Royale Canadienne
+            ✨ Marché en direct (CAD) : Or à 6 843 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 108,07 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne
         </div>
     </div>
 
     <div class="container">
-        <!-- Colonne de Gauche (Or et Hockey) -->
+        <!-- Colonne Gauche -->
         <div class="column">
-            <!-- Tableau : OR -->
             <div class="table-wrapper">
-                <h2 style="color: #ffd700; text-align: center; margin-top: 0;">Cours de l'Or (CAD)</h2>
-                <table class="gold-header">
+                <h2 class="gold-text">Cours de l'Or (Direct)</h2>
+                <table>
                     <thead>
                         <tr>
-                            <th>Unité</th>
-                            <th style="text-align: right;">Prix</th>
+                            <th>Unité (CAD)</th>
+                            <th style="text-align: right;">Prix Actuel</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Once d'or (Spot)</td>
-                            <td class="price">3 680,50 $<span class="currency-tag">CAD</span></td>
+                            <td>Once Spot</td>
+                            <td class="price">6 843,45 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Gramme (24k)</td>
-                            <td class="price">118,34 $<span class="currency-tag">CAD</span></td>
+                            <td class="price">220,02 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
-                            <td>Feuille d'érable 1 oz</td>
-                            <td class="price">3 648,38 $<span class="currency-tag">CAD</span></td>
+                            <td>Feuille d'érable (1 oz)</td>
+                            <td class="price">6 733,95 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- Tableau : CARTES DE HOCKEY -->
             <div class="table-wrapper">
-                <h2 style="color: #4ecdc4; text-align: center; margin-top: 0;">Gradation Cartes Hockey</h2>
-                <table class="hockey-header">
+                <h2 class="hockey-text">Gradation Hockey</h2>
+                <table>
                     <thead>
                         <tr>
-                            <th>Service / Société</th>
+                            <th>Compagnie</th>
                             <th style="text-align: right;">Frais</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>PSA (Standard)</td>
-                            <td class="price">35,00 $<span class="currency-tag">CAD</span></td>
+                            <td class="price">35,00 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Beckett (BGS)</td>
-                            <td class="price">42,50 $<span class="currency-tag">CAD</span></td>
+                            <td class="price">42,50 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>KSA (Local)</td>
-                            <td class="price">25,00 $<span class="currency-tag">CAD</span></td>
+                            <td class="price">25,00 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Centre : Kiosque #17 -->
-        <div id="central-kiosk">
-            Kiosque #17
+        <!-- Centre -->
+        <div class="center-block">
+            <div id="central-kiosk">Kiosque #17</div>
+            <div class="location-info">Marché aux puces Jean-Talon de Québec</div>
+            <div class="kiosk-sub">ACHAT • VENTE • ÉVALUATION</div>
         </div>
 
-        <!-- Colonne de Droite (Argent et Évaluation) -->
+        <!-- Colonne Droite -->
         <div class="column">
-            <!-- Tableau : ARGENT -->
             <div class="table-wrapper">
-                <h2 style="color: #c0c0c0; text-align: center; margin-top: 0;">Cours de l'Argent (CAD)</h2>
-                <table class="silver-header">
+                <h2 class="silver-text">Cours de l'Argent (Direct)</h2>
+                <table>
                     <thead>
                         <tr>
-                            <th>Unité</th>
-                            <th style="text-align: right;">Prix</th>
+                            <th>Unité (CAD)</th>
+                            <th style="text-align: right;">Prix Actuel</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Once d'argent (Spot)</td>
-                            <td class="price">44,83 $<span class="currency-tag">CAD</span></td>
+                            <td>Once Spot</td>
+                            <td class="price">108,07 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
-                            <td>Gramme d'argent</td>
-                            <td class="price">1,44 $<span class="currency-tag">CAD</span></td>
+                            <td>Gramme</td>
+                            <td class="price">3,47 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
-                            <td>Feuille d'érable 1 oz</td>
-                            <td class="price">46,77 $<span class="currency-tag">CAD</span></td>
+                            <td>Feuille d'érable</td>
+                            <td class="price">106,77 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Lingot 10 oz</td>
-                            <td class="price">432,64 $<span class="currency-tag">CAD</span></td>
+                            <td class="price">1 012,64 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- Nouveau Tableau : ÉVALUATION MONNAIE -->
             <div class="table-wrapper">
-                <h2 style="color: #ff9f43; text-align: center; margin-top: 0;">Évaluation de vos Collections</h2>
-                <table class="eval-header">
+                <h2 class="eval-text">Collections Monnaies</h2>
+                <table>
                     <thead>
                         <tr>
-                            <th>Type de Monnaie</th>
-                            <th style="text-align: right;">Détails</th>
+                            <th>Type</th>
+                            <th style="text-align: right;">Critères</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Pièces de circulation</td>
-                            <td class="price">1967 et -</td>
+                            <td>Pièces Argent (80%)</td>
+                            <td class="price">1967 & -</td>
                         </tr>
                         <tr>
-                            <td>Ensembles Épreuve</td>
-                            <td class="price">Toutes années</td>
+                            <td>Dollars Nickel</td>
+                            <td class="price">1968 - 1986</td>
                         </tr>
                         <tr>
-                            <td>Dollars en Argent</td>
-                            <td class="price">1935 - 1967</td>
-                        </tr>
-                        <tr>
-                            <td>Billets de banque</td>
-                            <td class="price">Séries 1954 -</td>
+                            <td>Billets</td>
+                            <td class="price">Séries 1937+</td>
                         </tr>
                     </tbody>
                 </table>
@@ -278,18 +324,12 @@
         </div>
     </div>
 
-    <p style="margin-top: 45px; font-style: italic; color: #888; text-align: center; padding-bottom: 30px;">
-        Kiosque #17 - Expert en métaux précieux et numismatique depuis 1995.
-    </p>
+    <footer style="margin-bottom: 40px; color: var(--text-muted); font-size: 0.85rem; text-align: center;">
+        Kiosque #17 • Données en direct du 16 Mars 2026 • Sources: Investing/Or.fr
+    </footer>
 
 </body>
 </html>
-
-
-
-
-
-
 
 
 
