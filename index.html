@@ -3,6 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosque #17 - Cours des Métaux et Services</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Bande de défilement */
+        .scrolling-banner {
+            width: 100%;
+            background-color: #000;
+            color: #fff;
+            padding: 12px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+            margin-bottom: 25px;
+        }
+
+        .scrolling-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-left 25s linear infinite;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 30px;
+            align-items: start;
+            padding: 0 20px;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .table-wrapper {
+            background: #2d2d2d;
+            padding: 18px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+            border: 1px solid #3d3d3d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+
+        th {
+            background-color: #383838;
+            font-size: 0.95rem;
+        }
+
+        /* Thèmes de couleurs par tableau */
+        .gold-header th { color: #ffd700; }
+        .silver-header th { color: #c0c0c0; }
+        .hockey-header th { color: #4ecdc4; }
+        .eval-header th { color: #ff9f43; }
+
+        tr:hover {
+            background-color: #3a3a3a;
+        }
+
+        .price {
+            font-weight: bold;
+            text-align: right;
+            color: #fff;
+        }
+
+        /* Élément central clignotant */
+        #central-kiosk {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ff0000;
+            text-transform: uppercase;
+            padding: 30px 10px;
+            animation: blinker 0.8s linear infinite;
+            min-width: 280px;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        .currency-tag {
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-left: 6px;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            #central-kiosk {
+                order: -1;
+                margin-bottom: 15px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bande de défilement -->
+    <div class="scrolling-banner">
+        <div class="scrolling-text">
+            Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; Nous achetons la Monnaie Royale Canadienne
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Colonne de Gauche (Or et Hockey) -->
+        <div class="column">
+            <!-- Tableau : OR -->
+            <div class="table-wrapper">
+                <h2 style="color: #ffd700; text-align: center; margin-top: 0;">Cours de l'Or (CAD)</h2>
+                <table class="gold-header">
+                    <thead>
+                        <tr>
+                            <th>Unité</th>
+                            <th style="text-align: right;">Prix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Once d'or (Spot)</td>
+                            <td class="price">3 680,50 $<span class="currency-tag">CAD</span></td>
+                        </tr>
+                        <tr>
+                            <td>Gramme (24k)</td>
+                            <td class="price">118,34 $<span class="currency-tag">CAD</span></td>
+                        </tr>
+                        <tr>
+                            <td>Feuille d'érable 1 oz</td>
+                            <td class="price">3 648,38 $<span class="currency-tag">CAD</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Tableau : CARTES DE HOCKEY -->
+            <div class="table-wrapper">
+                <h2 style="color: #4ecdc4; text-align: center; margin-top: 0;">Gradation Cartes Hockey</h2>
+                <table class="hockey-header">
+                    <thead>
+                        <tr>
+                            <th>Service / Société</th>
+                            <th style="text-align: right;">Frais</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PSA (Standard)</td>
+                            <td class="price">35,00 $<span class="currency-tag">CAD</span></td>
+                        </tr>
+                        <tr>
+                            <td>Beckett (BGS)</td>
+                            <td class="price">42,50 $<span class="currency-tag">CAD</span></td>
+                        </tr>
+                        <tr>
+                            <td>KSA (Local)</td>
+                            <td class="price">25,00 $<span class="currency-tag">CAD</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Centre : Kiosque #17 -->
+        <div id="central-kiosk">
+            Kiosque #17
+        </div>
+
+        <!-- Colonne de Droite (Argent et Évaluation) -->
+        <div class="column">
+            <!-- Tableau : ARGENT -->
+            <div class="table-wrapper">
+                <h2 style="color: #c0c0c0; text-align: center; margin-top: 0;">Cours de l'Argent (CAD)</h2>
+                <table class="silver-header">
+                    <thead>
+                        <tr>
+                            <th>Unité</th>
+                            <th style="text-align: right;">Prix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Once d'argent (Spot)</td>
+                            <td class="price">44,83 $<span class="currency-tag">CAD</span></td>
+                        </tr>
+                        <tr>
+                            <td>Gramme d'argent</td>
+                            <td class="price">1,44 $<span class="currency-tag">CAD</span></td>
+                        </tr>
+                        <tr>
+                            <td>Feuille d'érable 1 oz</td>
+                            <td class="price">46,77 $<span class="currency-tag">CAD</span></td>
+                        </tr>
+                        <tr>
+                            <td>Lingot 10 oz</td>
+                            <td class="price">432,64 $<span class="currency-tag">CAD</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Nouveau Tableau : ÉVALUATION MONNAIE -->
+            <div class="table-wrapper">
+                <h2 style="color: #ff9f43; text-align: center; margin-top: 0;">Évaluation de vos Collections</h2>
+                <table class="eval-header">
+                    <thead>
+                        <tr>
+                            <th>Type de Monnaie</th>
+                            <th style="text-align: right;">Détails</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pièces de circulation</td>
+                            <td class="price">1967 et -</td>
+                        </tr>
+                        <tr>
+                            <td>Ensembles Épreuve</td>
+                            <td class="price">Toutes années</td>
+                        </tr>
+                        <tr>
+                            <td>Dollars en Argent</td>
+                            <td class="price">1935 - 1967</td>
+                        </tr>
+                        <tr>
+                            <td>Billets de banque</td>
+                            <td class="price">Séries 1954 -</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <p style="margin-top: 45px; font-style: italic; color: #888; text-align: center; padding-bottom: 30px;">
+        Kiosque #17 - Expert en métaux précieux et numismatique depuis 1995.
+    </p>
+
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NXU | Hyper-Viseur Multiversel</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
