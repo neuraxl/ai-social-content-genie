@@ -75,7 +75,6 @@
             gap: 30px;
         }
 
-        /* Cartes de tableaux */
         .table-wrapper {
             background: var(--card-bg);
             border-radius: 16px;
@@ -121,7 +120,6 @@
             color: #fff;
         }
 
-        /* Bloc Central */
         .center-block {
             display: flex;
             flex-direction: column;
@@ -172,24 +170,24 @@
             margin-left: 4px;
         }
 
-        /* Couleurs spécifiques */
         .gold-text { color: var(--gold); }
         .silver-text { color: var(--silver); }
         .hockey-text { color: var(--hockey); }
         .eval-text { color: var(--eval); }
 
+        footer a {
+            color: var(--hockey);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+        }
+
+        footer a:hover {
+            border-bottom: 1px solid var(--hockey);
+        }
+
         @media (max-width: 1100px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-            .center-block {
-                order: -1;
-                padding-top: 0;
-                margin-bottom: 30px;
-            }
-            #central-kiosk {
-                font-size: 2.8rem;
-            }
+            .container { grid-template-columns: 1fr; }
+            .center-block { order: -1; margin-bottom: 30px; }
         }
     </style>
 </head>
@@ -197,20 +195,20 @@
 
     <div class="scrolling-banner">
         <div class="scrolling-text">
-            ✨ Marché en direct (CAD) : Or à 6 843 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 108,07 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne
+            ✨ Marché en direct (CAD) : Or à 6 843 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 108,07 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites sur place
         </div>
     </div>
 
     <div class="container">
-        <!-- Colonne Gauche -->
+        <!-- Colonne Or -->
         <div class="column">
             <div class="table-wrapper">
-                <h2 class="gold-text">Cours de l'Or (Direct)</h2>
+                <h2 class="gold-text">Cours de l'Or (Spot)</h2>
                 <table>
                     <thead>
                         <tr>
                             <th>Unité (CAD)</th>
-                            <th style="text-align: right;">Prix Actuel</th>
+                            <th style="text-align: right;">Prix</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -223,7 +221,7 @@
                             <td class="price">220,02 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
-                            <td>Feuille d'érable (1 oz)</td>
+                            <td>Maple Leaf (1 oz)</td>
                             <td class="price">6 733,95 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
@@ -231,11 +229,11 @@
             </div>
 
             <div class="table-wrapper">
-                <h2 class="hockey-text">Gradation Hockey</h2>
+                <h2 class="hockey-text">Gradation Cartes</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Compagnie</th>
+                            <th>Service</th>
                             <th style="text-align: right;">Frais</th>
                         </tr>
                     </thead>
@@ -243,10 +241,6 @@
                         <tr>
                             <td>PSA (Standard)</td>
                             <td class="price">35,00 <span class="currency-tag">$</span></td>
-                        </tr>
-                        <tr>
-                            <td>Beckett (BGS)</td>
-                            <td class="price">42,50 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>KSA (Local)</td>
@@ -260,19 +254,19 @@
         <!-- Centre -->
         <div class="center-block">
             <div id="central-kiosk">Kiosque #17</div>
-            <div class="location-info">Marché aux puces Jean-Talon de Québec</div>
+            <div class="location-info">Marché Jean-Talon, Québec</div>
             <div class="kiosk-sub">ACHAT • VENTE • ÉVALUATION</div>
         </div>
 
-        <!-- Colonne Droite -->
+        <!-- Colonne Argent -->
         <div class="column">
             <div class="table-wrapper">
-                <h2 class="silver-text">Cours de l'Argent (Direct)</h2>
+                <h2 class="silver-text">Cours de l'Argent (Spot)</h2>
                 <table>
                     <thead>
                         <tr>
                             <th>Unité (CAD)</th>
-                            <th style="text-align: right;">Prix Actuel</th>
+                            <th style="text-align: right;">Prix</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -285,38 +279,30 @@
                             <td class="price">3,47 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
-                            <td>Feuille d'érable</td>
-                            <td class="price">106,77 <span class="currency-tag">$</span></td>
-                        </tr>
-                        <tr>
-                            <td>Lingot 10 oz</td>
-                            <td class="price">1 012,64 <span class="currency-tag">$</span></td>
+                            <td>Maple Leaf</td>
+                            <td class="price">104,58 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="table-wrapper">
-                <h2 class="eval-text">Collections Monnaies</h2>
+                <h2 class="eval-text">Numismatique</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Type</th>
-                            <th style="text-align: right;">Critères</th>
+                            <th>Collection</th>
+                            <th style="text-align: right;">Type</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Pièces Argent (80%)</td>
-                            <td class="price">1967 & -</td>
+                            <td>Monnaie Argent</td>
+                            <td class="price">80% pur</td>
                         </tr>
                         <tr>
-                            <td>Dollars Nickel</td>
-                            <td class="price">1968 - 1986</td>
-                        </tr>
-                        <tr>
-                            <td>Billets</td>
-                            <td class="price">Séries 1937+</td>
+                            <td>Billets Rares</td>
+                            <td class="price">Cdn / Int</td>
                         </tr>
                     </tbody>
                 </table>
@@ -324,8 +310,11 @@
         </div>
     </div>
 
-    <footer style="margin-bottom: 40px; color: var(--text-muted); font-size: 0.85rem; text-align: center;">
-        Kiosque #17 • Données en direct du 16 Mars 2026 • Sources: Investing/Or.fr
+    <footer style="margin-top: 20px; margin-bottom: 40px; color: var(--text-muted); font-size: 0.85rem; text-align: center; max-width: 600px;">
+        Données du 16 Mars 2026. Sources en direct : <br>
+        <a href="https://www.kitco.com/charts/gold" target="_blank">Kitco Metals</a> | 
+        <a href="https://or.fr/cours/or/cad" target="_blank">Or.fr (CAD)</a> | 
+        <a href="https://ca.investing.com/currencies/xag-cad" target="_blank">Investing.com</a>
     </footer>
 
 </body>
