@@ -16,6 +16,7 @@
             --red: #ff4757;
             --text-main: #f1f2f6;
             --text-muted: #a4b0be;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         body {
@@ -27,6 +28,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
             line-height: 1.5;
         }
 
@@ -35,7 +37,7 @@
             width: 100%;
             background-color: #000;
             border-bottom: 2px solid var(--border-color);
-            padding: 12px 0;
+            padding: 15px 0;
             overflow: hidden;
             position: sticky;
             top: 0;
@@ -47,8 +49,8 @@
             white-space: nowrap;
             padding-left: 100%;
             animation: scroll-left 25s linear infinite;
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.45rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #fff;
@@ -63,24 +65,39 @@
             width: 95%;
             max-width: 1400px;
             display: grid;
-            grid-template-columns: 1fr 350px 1fr;
-            gap: 30px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
             padding: 40px 20px;
-            align-items: start;
+            align-items: stretch;
         }
 
         .column {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 25px;
+        }
+
+        .center-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
         }
 
         .table-wrapper {
             background: var(--card-bg);
             border-radius: 16px;
             padding: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: var(--card-shadow);
             border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .table-wrapper:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.1);
         }
 
         h2 {
@@ -89,6 +106,7 @@
             text-align: center;
             font-weight: 700;
             letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         table {
@@ -98,19 +116,23 @@
         }
 
         th {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
-            padding: 12px 15px;
+            padding: 12px 10px;
             text-align: left;
             border-bottom: 2px solid var(--border-color);
         }
 
         td {
-            padding: 15px;
+            padding: 14px 10px;
             border-bottom: 1px solid var(--border-color);
             font-size: 1rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
         }
 
         .price {
@@ -120,54 +142,46 @@
             color: #fff;
         }
 
-        .center-block {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding-top: 40px;
-        }
-
         #central-kiosk {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 900;
             color: var(--red);
             text-transform: uppercase;
             animation: blinker 1.2s ease-in-out infinite;
-            text-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
-            line-height: 1;
-            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255, 71, 87, 0.4);
+            line-height: 0.9;
+            margin-bottom: 15px;
         }
 
         .location-info {
             color: var(--text-main);
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-top: 5px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-top: 10px;
             background: rgba(255, 255, 255, 0.05);
-            padding: 8px 15px;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 12px;
             border: 1px dashed var(--border-color);
         }
 
         .kiosk-sub {
             color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 15px;
-            letter-spacing: 4px;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            letter-spacing: 5px;
             text-transform: uppercase;
+            font-weight: 500;
         }
 
         @keyframes blinker {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            50% { opacity: 0.6; }
         }
 
         .currency-tag {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            margin-left: 4px;
+            margin-left: 5px;
         }
 
         .gold-text { color: var(--gold); }
@@ -175,19 +189,47 @@
         .hockey-text { color: var(--hockey); }
         .eval-text { color: var(--eval); }
 
+        footer {
+            margin-top: auto;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-align: center;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+        }
+
         footer a {
             color: var(--hockey);
             text-decoration: none;
-            border-bottom: 1px solid transparent;
+            margin: 0 10px;
+            transition: color 0.3s;
         }
 
         footer a:hover {
-            border-bottom: 1px solid var(--hockey);
+            color: #fff;
         }
 
-        @media (max-width: 1100px) {
-            .container { grid-template-columns: 1fr; }
-            .center-block { order: -1; margin-bottom: 30px; }
+        @media (max-width: 1200px) {
+            .container { 
+                grid-template-columns: 1fr 1fr;
+            }
+            .center-column {
+                grid-column: span 2;
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container { 
+                grid-template-columns: 1fr;
+            }
+            .center-column {
+                grid-column: span 1;
+            }
+            #central-kiosk {
+                font-size: 3rem;
+            }
         }
     </style>
 </head>
@@ -195,7 +237,7 @@
 
     <div class="scrolling-banner">
         <div class="scrolling-text">
-            ✨ Marché en direct (CAD) : Or à 6 843 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 108,07 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites sur place
+            ✨ Marché en direct (CAD) : Or à 6 137,00 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 93,37 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites au Kiosque 17
         </div>
     </div>
 
@@ -204,26 +246,26 @@
         <div class="column">
             <!-- Section Or -->
             <div class="table-wrapper">
-                <h2 class="gold-text">Cours de l'Or (Spot)</h2>
+                <h2 class="gold-text">Cours de l'Or (Spot CAD)</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Unité (CAD)</th>
+                            <th>Unité</th>
                             <th style="text-align: right;">Prix</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Once Spot</td>
-                            <td class="price">6 843,45 <span class="currency-tag">$</span></td>
+                            <td class="price">6 137,00 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Gramme (24k)</td>
-                            <td class="price">220,02 <span class="currency-tag">$</span></td>
+                            <td class="price">197,31 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Maple Leaf (1 oz)</td>
-                            <td class="price">6 733,95 <span class="currency-tag">$</span></td>
+                            <td class="price">6 385,00 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -242,11 +284,11 @@
                     <tbody>
                         <tr>
                             <td>RCG (Standard)</td>
-                            <td class="price">20,00 <span class="currency-tag">$</span></td>
+                            <td class="price">15,00 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>RCG (Express)</td>
-                            <td class="price">35,00 <span class="currency-tag">$</span></td>
+                            <td class="price">30,00 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -254,7 +296,7 @@
         </div>
 
         <!-- Centre -->
-        <div class="center-block">
+        <div class="center-column">
             <div id="central-kiosk">Kiosque #17</div>
             <div class="location-info">Marché Jean-Talon, Québec</div>
             <div class="kiosk-sub">ACHAT • VENTE • ÉVALUATION</div>
@@ -264,31 +306,32 @@
         <div class="column">
             <!-- Section Argent -->
             <div class="table-wrapper">
-                <h2 class="silver-text">Cours de l'Argent (Spot)</h2>
+                <h2 class="silver-text">Cours de l'Argent (Spot CAD)</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Unité (CAD)</th>
+                            <th>Unité</th>
                             <th style="text-align: right;">Prix</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Once Spot</td>
-                            <td class="price">108,07 <span class="currency-tag">$</span></td>
+                            <td class="price">93,37 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Gramme</td>
-                            <td class="price">3,47 <span class="currency-tag">$</span></td>
+                            <td class="price">3,00 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Maple Leaf</td>
-                            <td class="price">104,58 <span class="currency-tag">$</span></td>
+                            <td class="price">102,50 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
+            <!-- Section Numismatique -->
             <div class="table-wrapper">
                 <h2 class="eval-text">Numismatique</h2>
                 <table>
@@ -313,11 +356,13 @@
         </div>
     </div>
 
-    <footer style="margin-top: 20px; margin-bottom: 40px; color: var(--text-muted); font-size: 0.85rem; text-align: center; max-width: 600px;">
-        Données du 16 Mars 2026. Sources en direct : <br>
-        <a href="https://www.kitco.com/charts/gold" target="_blank">Kitco Metals</a> | 
-        <a href="https://or.fr/cours/or/cad" target="_blank">Or.fr (CAD)</a> | 
-        <a href="https://ca.investing.com/currencies/xag-cad" target="_blank">Investing.com</a>
+    <footer>
+        <div>Données du 21 Mars 2026. Sources de référence :</div>
+        <div style="margin-top: 10px;">
+            <a href="https://www.kitco.com/charts/gold" target="_blank">Kitco Metals</a> | 
+            <a href="https://or.fr/cours/or/cad" target="_blank">Or.fr (CAD)</a> | 
+            <a href="https://ca.investing.com/currencies/xag-cad" target="_blank">Investing.com</a>
+        </div>
     </footer>
 
 </body>
