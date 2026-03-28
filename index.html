@@ -14,6 +14,7 @@
             --hockey: #00d2d3;
             --eval: #ff9f43;
             --red: #ff4757;
+            --police-blue: #0044ff;
             --text-main: #f1f2f6;
             --text-muted: #a4b0be;
             --card-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -140,6 +141,42 @@
             font-weight: 600;
             text-align: right;
             color: #fff;
+        }
+
+        /* Gyrophare de police */
+        .police-spot {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .light {
+            width: 40px;
+            height: 20px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .blue-light {
+            background-color: var(--police-blue);
+            box-shadow: 0 0 20px var(--police-blue);
+            animation: flash-blue 0.4s infinite alternate;
+        }
+
+        .red-light {
+            background-color: var(--red);
+            box-shadow: 0 0 20px var(--red);
+            animation: flash-red 0.4s infinite alternate-reverse;
+        }
+
+        @keyframes flash-blue {
+            from { opacity: 0.2; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1.1); box-shadow: 0 0 40px var(--police-blue); }
+        }
+
+        @keyframes flash-red {
+            from { opacity: 0.2; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1.1); box-shadow: 0 0 40px var(--red); }
         }
 
         #central-kiosk {
@@ -297,6 +334,14 @@
 
         <!-- Centre -->
         <div class="center-column">
+            <!-- Spot Police -->
+            <div class="police-spot">
+                <div class="light blue-light"></div>
+                <div class="light red-light"></div>
+                <div class="light blue-light"></div>
+                <div class="light red-light"></div>
+            </div>
+            
             <div id="central-kiosk">Kiosque #17</div>
             <div class="location-info">Marché Jean-Talon, Québec</div>
             <div class="kiosk-sub">ACHAT • VENTE • ÉVALUATION</div>
