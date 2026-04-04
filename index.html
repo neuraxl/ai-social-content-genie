@@ -14,7 +14,6 @@
             --hockey: #00d2d3;
             --eval: #ff9f43;
             --red: #ff4757;
-            --police-blue: #0044ff;
             --text-main: #f1f2f6;
             --text-muted: #a4b0be;
             --card-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -38,7 +37,7 @@
             width: 100%;
             background-color: #000;
             border-bottom: 2px solid var(--border-color);
-            padding: 15px 0;
+            padding: 12px 0;
             overflow: hidden;
             position: sticky;
             top: 0;
@@ -50,8 +49,8 @@
             white-space: nowrap;
             padding-left: 100%;
             animation: scroll-left 25s linear infinite;
-            font-size: 1.45rem;
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #fff;
@@ -78,6 +77,7 @@
             gap: 25px;
         }
 
+        /* Centre ajusté pour mieux s'intégrer dans la grille */
         .center-column {
             display: flex;
             flex-direction: column;
@@ -141,42 +141,6 @@
             font-weight: 600;
             text-align: right;
             color: #fff;
-        }
-
-        /* Gyrophare de police */
-        .police-spot {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .light {
-            width: 40px;
-            height: 20px;
-            border-radius: 4px;
-            position: relative;
-        }
-
-        .blue-light {
-            background-color: var(--police-blue);
-            box-shadow: 0 0 20px var(--police-blue);
-            animation: flash-blue 0.4s infinite alternate;
-        }
-
-        .red-light {
-            background-color: var(--red);
-            box-shadow: 0 0 20px var(--red);
-            animation: flash-red 0.4s infinite alternate-reverse;
-        }
-
-        @keyframes flash-blue {
-            from { opacity: 0.2; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1.1); box-shadow: 0 0 40px var(--police-blue); }
-        }
-
-        @keyframes flash-red {
-            from { opacity: 0.2; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1.1); box-shadow: 0 0 40px var(--red); }
         }
 
         #central-kiosk {
@@ -274,7 +238,7 @@
 
     <div class="scrolling-banner">
         <div class="scrolling-text">
-            ✨ Marché en direct (CAD) : Or à 6 242,90 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 96,95 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites au Kiosque 17
+            ✨ Marché en direct (CAD) : Or à 6 518,35 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 101,75 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites sur place
         </div>
     </div>
 
@@ -283,26 +247,26 @@
         <div class="column">
             <!-- Section Or -->
             <div class="table-wrapper">
-                <h2 class="gold-text">Cours de l'Or (Spot CAD)</h2>
+                <h2 class="gold-text">Cours de l'Or (Spot)</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Unité</th>
+                            <th>Unité (CAD)</th>
                             <th style="text-align: right;">Prix</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Once Spot</td>
-                            <td class="price">6 242,90 <span class="currency-tag">$</span></td>
+                            <td class="price">6 518,35 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Gramme (24k)</td>
-                            <td class="price">200,71 <span class="currency-tag">$</span></td>
+                            <td class="price">209,56 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Maple Leaf (1 oz)</td>
-                            <td class="price">6 495,00 <span class="currency-tag">$</span></td>
+                            <td class="price">6 412,25 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -321,27 +285,19 @@
                     <tbody>
                         <tr>
                             <td>RCG (Standard)</td>
-                            <td class="price">15,00 <span class="currency-tag">$</span></td>
+                            <td class="price">20,00 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>RCG (Express)</td>
-                            <td class="price">30,00 <span class="currency-tag">$</span></td>
+                            <td class="price">35,00 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Centre -->
+        <!-- Centre (Intégré dans la grille) -->
         <div class="center-column">
-            <!-- Spot Police -->
-            <div class="police-spot">
-                <div class="light blue-light"></div>
-                <div class="light red-light"></div>
-                <div class="light blue-light"></div>
-                <div class="light red-light"></div>
-            </div>
-            
             <div id="central-kiosk">Kiosque #17</div>
             <div class="location-info">Marché Jean-Talon, Québec</div>
             <div class="kiosk-sub">ACHAT • VENTE • ÉVALUATION</div>
@@ -351,26 +307,26 @@
         <div class="column">
             <!-- Section Argent -->
             <div class="table-wrapper">
-                <h2 class="silver-text">Cours de l'Argent (Spot CAD)</h2>
+                <h2 class="silver-text">Cours de l'Argent (Spot)</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Unité</th>
+                            <th>Unité (CAD)</th>
                             <th style="text-align: right;">Prix</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Once Spot</td>
-                            <td class="price">96,95 <span class="currency-tag">$</span></td>
+                            <td class="price">101,75 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Gramme</td>
-                            <td class="price">3,12 <span class="currency-tag">$</span></td>
+                            <td class="price">3,27 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Maple Leaf</td>
-                            <td class="price">106,50 <span class="currency-tag">$</span></td>
+                            <td class="price">98,45 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -402,7 +358,7 @@
     </div>
 
     <footer>
-        <div>Données du 27 Mars 2026. Sources de référence :</div>
+        <div>Données du 16 Mars 2026. Sources en direct :</div>
         <div style="margin-top: 10px;">
             <a href="https://www.kitco.com/charts/gold" target="_blank">Kitco Metals</a> | 
             <a href="https://or.fr/cours/or/cad" target="_blank">Or.fr (CAD)</a> | 
