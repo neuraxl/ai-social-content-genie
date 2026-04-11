@@ -14,6 +14,7 @@
             --hockey: #00d2d3;
             --eval: #ff9f43;
             --red: #ff4757;
+            --blue: #3498db;
             --text-main: #f1f2f6;
             --text-muted: #a4b0be;
             --card-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -77,7 +78,7 @@
             gap: 25px;
         }
 
-        /* Centre ajusté pour mieux s'intégrer dans la grille */
+        /* Centre ajusté */
         .center-column {
             display: flex;
             flex-direction: column;
@@ -85,6 +86,38 @@
             align-items: center;
             text-align: center;
             padding: 20px;
+        }
+
+        /* Simulation de GIF animé Horizontal */
+        .animated-gif-sim {
+            width: 240px;
+            height: 15px; /* Plus fin pour le bas */
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            margin-top: 25px; /* Espace au-dessus */
+        }
+
+        .light {
+            flex: 1;
+            border-radius: 2px;
+            animation: flash 0.5s infinite alternate;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .light-red {
+            background-color: var(--red);
+            animation-delay: 0s;
+        }
+
+        .light-blue {
+            background-color: var(--blue);
+            animation-delay: 0.25s;
+        }
+
+        @keyframes flash {
+            from { opacity: 0.3; filter: brightness(0.8); }
+            to { opacity: 1; filter: brightness(1.6); box-shadow: 0 0 20px currentColor; }
         }
 
         .table-wrapper {
@@ -231,6 +264,9 @@
             #central-kiosk {
                 font-size: 3rem;
             }
+            .animated-gif-sim {
+                width: 180px;
+            }
         }
     </style>
 </head>
@@ -238,7 +274,7 @@
 
     <div class="scrolling-banner">
         <div class="scrolling-text">
-            ✨ Marché en direct (CAD) : Or à 6 518,35 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 101,75 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites sur place
+            ✨ Marché en direct (CAD) : Or à 6 571,55 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 105,13 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites sur place
         </div>
     </div>
 
@@ -258,15 +294,15 @@
                     <tbody>
                         <tr>
                             <td>Once Spot</td>
-                            <td class="price">6 518,35 <span class="currency-tag">$</span></td>
+                            <td class="price">6 571,55 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Gramme (24k)</td>
-                            <td class="price">209,56 <span class="currency-tag">$</span></td>
+                            <td class="price">211,28 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Maple Leaf (1 oz)</td>
-                            <td class="price">6 412,25 <span class="currency-tag">$</span></td>
+                            <td class="price">6 465,10 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -296,11 +332,21 @@
             </div>
         </div>
 
-        <!-- Centre (Intégré dans la grille) -->
+        <!-- Centre -->
         <div class="center-column">
             <div id="central-kiosk">Kiosque #17</div>
             <div class="location-info">Marché Jean-Talon, Québec</div>
             <div class="kiosk-sub">ACHAT • VENTE • ÉVALUATION</div>
+            
+            <!-- Animation Blue et Rouge déplacée sous les services -->
+            <div class="animated-gif-sim">
+                <div class="light light-blue"></div>
+                <div class="light light-red"></div>
+                <div class="light light-blue"></div>
+                <div class="light light-red"></div>
+                <div class="light light-blue"></div>
+                <div class="light light-red"></div>
+            </div>
         </div>
 
         <!-- Colonne Droite -->
@@ -318,15 +364,15 @@
                     <tbody>
                         <tr>
                             <td>Once Spot</td>
-                            <td class="price">101,75 <span class="currency-tag">$</span></td>
+                            <td class="price">105,13 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Gramme</td>
-                            <td class="price">3,27 <span class="currency-tag">$</span></td>
+                            <td class="price">3,38 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Maple Leaf</td>
-                            <td class="price">98,45 <span class="currency-tag">$</span></td>
+                            <td class="price">101,70 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -358,7 +404,7 @@
     </div>
 
     <footer>
-        <div>Données du 16 Mars 2026. Sources en direct :</div>
+        <div>Données du 11 Avril 2026. Sources en direct :</div>
         <div style="margin-top: 10px;">
             <a href="https://www.kitco.com/charts/gold" target="_blank">Kitco Metals</a> | 
             <a href="https://or.fr/cours/or/cad" target="_blank">Or.fr (CAD)</a> | 
