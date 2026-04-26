@@ -84,20 +84,67 @@
         .center-column {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             text-align: center;
             padding: 20px;
         }
 
-        /* Nouveau texte clignotant Sherbrook */
+        /* Conteneur pour le signe et les colonnes */
+        .masonic-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        /* Colonnes en argent */
+        .silver-column {
+            width: 18px;
+            height: 70px;
+            background: linear-gradient(90deg, #7f8c8d, #bdc3c7, #7f8c8d);
+            position: relative;
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(189, 195, 199, 0.3);
+        }
+
+        .silver-column::before { /* Chapiteau */
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -4px;
+            width: 26px;
+            height: 8px;
+            background: #bdc3c7;
+            border-radius: 2px;
+        }
+
+        .silver-column::after { /* Base */
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: -4px;
+            width: 26px;
+            height: 8px;
+            background: #7f8c8d;
+            border-radius: 2px;
+        }
+
+        .masonic-symbol {
+            width: 70px;
+            height: 70px;
+            filter: drop-shadow(0 0 12px rgba(241, 196, 15, 0.4));
+        }
+
+        /* Texte clignotant Sherbrook remonté */
         .sherbrook-promo {
             color: #ffffff;
             font-size: 1.2rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 15px;
+            margin-bottom: 30px; /* Plus d'espace sous le texte */
             animation: white-flash 0.8s ease-in-out infinite;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
@@ -296,7 +343,7 @@
 
     <div class="scrolling-banner">
         <div class="scrolling-text">
-            ✨ Marché en direct (CAD) : Or à 6 615,00 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 110,78 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites sur place
+            ✨ Marché en direct (CAD) : Or à 6 435,85 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 103,44 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites sur place
         </div>
     </div>
 
@@ -316,15 +363,15 @@
                     <tbody>
                         <tr>
                             <td>Once Spot</td>
-                            <td class="price">6 615,00 <span class="currency-tag">$</span></td>
+                            <td class="price">6 435,85 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Gramme (24k)</td>
-                            <td class="price">212,67 <span class="currency-tag">$</span></td>
+                            <td class="price">206,92 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Maple Leaf (1 oz)</td>
-                            <td class="price">6 510,40 <span class="currency-tag">$</span></td>
+                            <td class="price">6 330,25 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -356,7 +403,7 @@
 
         <!-- Centre -->
         <div class="center-column">
-            <!-- Texte Sherbrook clignotant -->
+            <!-- Texte Sherbrook remonté tout en haut de la colonne -->
             <div class="sherbrook-promo">
                 Monnaie et Jouets Sherbrook 819-780-3334
             </div>
@@ -365,7 +412,7 @@
             <div class="location-info">Marché Jean-Talon, Québec</div>
             <div class="kiosk-sub">ACHAT • VENTE • ÉVALUATION</div>
             
-            <!-- Animation Blue et Rouge sous les services -->
+            <!-- Animation Bleue et Rouge -->
             <div class="animated-gif-sim">
                 <div class="light light-blue"></div>
                 <div class="light light-red"></div>
@@ -373,6 +420,20 @@
                 <div class="light light-red"></div>
                 <div class="light light-blue"></div>
                 <div class="light light-red"></div>
+            </div>
+
+            <!-- Signe Maçonnique encadré par deux colonnes d'argent -->
+            <div class="masonic-container">
+                <div class="silver-column"></div>
+                <svg class="masonic-symbol" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Compas -->
+                    <path d="M50 10 L85 90 M50 10 L15 90" stroke="var(--gold)" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <!-- Équerre -->
+                    <path d="M20 50 L50 85 L80 50" stroke="var(--gold)" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <!-- La lettre G au centre -->
+                    <text x="50" y="62" font-family="serif" font-size="22" fill="var(--gold)" text-anchor="middle" font-weight="bold">G</text>
+                </svg>
+                <div class="silver-column"></div>
             </div>
         </div>
 
@@ -391,15 +452,15 @@
                     <tbody>
                         <tr>
                             <td>Once Spot</td>
-                            <td class="price">110,78 <span class="currency-tag">$</span></td>
+                            <td class="price">103,44 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Gramme</td>
-                            <td class="price">3,56 <span class="currency-tag">$</span></td>
+                            <td class="price">3,33 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Maple Leaf</td>
-                            <td class="price">107,45 <span class="currency-tag">$</span></td>
+                            <td class="price">100,50 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
