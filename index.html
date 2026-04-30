@@ -90,19 +90,19 @@
             padding: 20px;
         }
 
-        /* Conteneur pour le signe et les colonnes */
-        .masonic-container {
+        /* Conteneur pour les pièces et les colonnes */
+        .bullion-display {
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
             margin-top: 25px;
         }
 
         /* Colonnes en argent */
         .silver-column {
             width: 18px;
-            height: 70px;
+            height: 80px;
             background: linear-gradient(90deg, #7f8c8d, #bdc3c7, #7f8c8d);
             position: relative;
             border-radius: 2px;
@@ -131,20 +131,21 @@
             border-radius: 2px;
         }
 
-        .masonic-symbol {
-            width: 70px;
-            height: 70px;
-            filter: drop-shadow(0 0 12px rgba(241, 196, 15, 0.4));
+        /* Design des pièces en SVG */
+        .bars-icon {
+            width: 110px;
+            height: 80px;
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
         }
 
-        /* Texte clignotant Sherbrook remonté */
+        /* Texte clignotant Sherbrook */
         .sherbrook-promo {
             color: #ffffff;
             font-size: 1.2rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 30px; /* Plus d'espace sous le texte */
+            margin-bottom: 30px;
             animation: white-flash 0.8s ease-in-out infinite;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
@@ -154,7 +155,7 @@
             50% { opacity: 0.3; transform: scale(0.98); }
         }
 
-        /* Simulation de GIF animé Horizontal */
+        /* Simulation de lumières animées */
         .animated-gif-sim {
             width: 240px;
             height: 15px;
@@ -311,31 +312,14 @@
         }
 
         @media (max-width: 1200px) {
-            .container { 
-                grid-template-columns: 1fr 1fr;
-            }
-            .center-column {
-                grid-column: span 2;
-                order: -1;
-            }
+            .container { grid-template-columns: 1fr 1fr; }
+            .center-column { grid-column: span 2; order: -1; }
         }
 
         @media (max-width: 768px) {
-            .container { 
-                grid-template-columns: 1fr;
-            }
-            .center-column {
-                grid-column: span 1;
-            }
-            #central-kiosk {
-                font-size: 3rem;
-            }
-            .animated-gif-sim {
-                width: 180px;
-            }
-            .sherbrook-promo {
-                font-size: 1rem;
-            }
+            .container { grid-template-columns: 1fr; }
+            .center-column { grid-column: span 1; }
+            #central-kiosk { font-size: 3rem; }
         }
     </style>
 </head>
@@ -350,7 +334,6 @@
     <div class="container">
         <!-- Colonne Gauche -->
         <div class="column">
-            <!-- Section Or -->
             <div class="table-wrapper">
                 <h2 class="gold-text">Cours de l'Or (Spot)</h2>
                 <table>
@@ -377,7 +360,6 @@
                 </table>
             </div>
             
-            <!-- Section Gradation Cartes RCG -->
             <div class="table-wrapper">
                 <h2 class="hockey-text">Gradation Cartes RCG</h2>
                 <table>
@@ -403,7 +385,6 @@
 
         <!-- Centre -->
         <div class="center-column">
-            <!-- Texte Sherbrook remonté tout en haut de la colonne -->
             <div class="sherbrook-promo">
                 Monnaie et Jouets Sherbrook 819-780-3334
             </div>
@@ -412,7 +393,6 @@
             <div class="location-info">Marché Jean-Talon, Québec</div>
             <div class="kiosk-sub">ACHAT • VENTE • ÉVALUATION</div>
             
-            <!-- Animation Bleue et Rouge -->
             <div class="animated-gif-sim">
                 <div class="light light-blue"></div>
                 <div class="light light-red"></div>
@@ -422,16 +402,40 @@
                 <div class="light light-red"></div>
             </div>
 
-            <!-- Signe Maçonnique encadré par deux colonnes d'argent -->
-            <div class="masonic-container">
+            <!-- NOUVEAU LOGO : PIÈCES D'ARGENT ET OR -->
+            <div class="bullion-display">
                 <div class="silver-column"></div>
-                <svg class="masonic-symbol" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Compas -->
-                    <path d="M50 10 L85 90 M50 10 L15 90" stroke="var(--gold)" stroke-width="6" fill="none" stroke-linecap="round"/>
-                    <!-- Équerre -->
-                    <path d="M20 50 L50 85 L80 50" stroke="var(--gold)" stroke-width="6" fill="none" stroke-linecap="round"/>
-                    <!-- La lettre G au centre -->
-                    <text x="50" y="62" font-family="serif" font-size="22" fill="var(--gold)" text-anchor="middle" font-weight="bold">G</text>
+                <svg class="bars-icon" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="goldCoin" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#f1c40f" />
+                            <stop offset="50%" style="stop-color:#fffce1" />
+                            <stop offset="100%" style="stop-color:#d4af37" />
+                        </linearGradient>
+                        <linearGradient id="silverCoin" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#bdc3c7" />
+                            <stop offset="50%" style="stop-color:#ffffff" />
+                            <stop offset="100%" style="stop-color:#7f8c8d" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Pile d'argent (gauche) -->
+                    <ellipse cx="40" cy="65" rx="25" ry="8" fill="#7f8c8d"/>
+                    <ellipse cx="40" cy="60" rx="25" ry="8" fill="#95a5a6" stroke="#7f8c8d" stroke-width="0.5"/>
+                    <ellipse cx="40" cy="55" rx="25" ry="8" fill="url(#silverCoin)" stroke="#7f8c8d" stroke-width="0.5"/>
+                    <text x="40" y="57" font-size="5" fill="#5d6363" text-anchor="middle" font-weight="bold">FINE SILVER</text>
+
+                    <!-- Pile d'or (droite, devant) -->
+                    <ellipse cx="80" cy="65" rx="25" ry="8" fill="#d4af37"/>
+                    <ellipse cx="80" cy="60" rx="25" ry="8" fill="#f1c40f" stroke="#d4af37" stroke-width="0.5"/>
+                    <ellipse cx="80" cy="55" rx="25" ry="8" fill="url(#goldCoin)" stroke="#d4af37" stroke-width="0.5"/>
+                    <text x="80" y="57" font-size="5" fill="#9e7e12" text-anchor="middle" font-weight="bold">9999 GOLD</text>
+                    
+                    <!-- Pièce verticale au centre -->
+                    <circle cx="60" cy="35" r="22" fill="url(#silverCoin)" stroke="#7f8c8d" stroke-width="1"/>
+                    <circle cx="60" cy="35" r="18" fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="0.5"/>
+                    <path d="M60 20 L60 50 M45 35 L75 35" stroke="rgba(0,0,0,0.05)" stroke-width="0.5"/>
+                    <text x="60" y="38" font-size="12" fill="#5d6363" text-anchor="middle" font-weight="bold" opacity="0.3">$</text>
                 </svg>
                 <div class="silver-column"></div>
             </div>
@@ -439,7 +443,6 @@
 
         <!-- Colonne Droite -->
         <div class="column">
-            <!-- Section Argent -->
             <div class="table-wrapper">
                 <h2 class="silver-text">Cours de l'Argent (Spot)</h2>
                 <table>
@@ -466,7 +469,6 @@
                 </table>
             </div>
 
-            <!-- Section Numismatique -->
             <div class="table-wrapper">
                 <h2 class="eval-text">Numismatique</h2>
                 <table>
