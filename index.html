@@ -35,7 +35,6 @@
             line-height: 1.5;
         }
 
-        /* Bande de défilement */
         .scrolling-banner {
             width: 100%;
             background-color: #000;
@@ -87,91 +86,6 @@
             align-items: center;
             text-align: center;
             padding: 20px;
-        }
-
-        .bullion-display {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 25px;
-        }
-
-        .silver-column {
-            width: 18px;
-            height: 80px;
-            background: linear-gradient(90deg, #7f8c8d, #bdc3c7, #7f8c8d);
-            position: relative;
-            border-radius: 2px;
-            box-shadow: 0 0 15px rgba(189, 195, 199, 0.3);
-        }
-
-        .silver-column::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: -4px;
-            width: 26px;
-            height: 8px;
-            background: #bdc3c7;
-            border-radius: 2px;
-        }
-
-        .silver-column::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: -4px;
-            width: 26px;
-            height: 8px;
-            background: #7f8c8d;
-            border-radius: 2px;
-        }
-
-        .bars-icon {
-            width: 110px;
-            height: 80px;
-            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
-        }
-
-        .sherbrook-promo {
-            color: #ffffff;
-            font-size: 1.2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
-            animation: white-flash 0.8s ease-in-out infinite;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-        }
-
-        @keyframes white-flash {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.98); }
-        }
-
-        .animated-gif-sim {
-            width: 240px;
-            height: 15px;
-            display: flex;
-            flex-direction: row;
-            gap: 5px;
-            margin-top: 25px;
-        }
-
-        .light {
-            flex: 1;
-            border-radius: 2px;
-            animation: flash 0.5s infinite alternate;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-        }
-
-        .light-red { background-color: var(--red); animation-delay: 0s; }
-        .light-blue { background-color: var(--blue); animation-delay: 0.25s; }
-
-        @keyframes flash {
-            from { opacity: 0.3; filter: brightness(0.8); }
-            to { opacity: 1; filter: brightness(1.6); box-shadow: 0 0 20px currentColor; }
         }
 
         .table-wrapper {
@@ -283,6 +197,30 @@
         .hockey-text { color: var(--hockey); }
         .eval-text { color: var(--eval); }
 
+        .animated-gif-sim {
+            width: 240px;
+            height: 15px;
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            margin-top: 25px;
+        }
+
+        .light {
+            flex: 1;
+            border-radius: 2px;
+            animation: flash 0.5s infinite alternate;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .light-red { background-color: var(--red); animation-delay: 0s; }
+        .light-blue { background-color: var(--blue); animation-delay: 0.25s; }
+
+        @keyframes flash {
+            from { opacity: 0.3; filter: brightness(0.8); }
+            to { opacity: 1; filter: brightness(1.6); box-shadow: 0 0 20px currentColor; }
+        }
+
         footer {
             margin-top: auto;
             padding: 40px 20px;
@@ -292,8 +230,6 @@
             width: 100%;
             background: rgba(0,0,0,0.2);
         }
-
-        footer a { color: var(--hockey); text-decoration: none; margin: 0 10px; }
 
         @media (max-width: 1200px) {
             .container { grid-template-columns: 1fr 1fr; }
@@ -311,15 +247,15 @@
 
     <div class="scrolling-banner">
         <div id="ticker" class="scrolling-text">
-            Chargement des données en direct... &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites sur place
+            Chargement des prix en direct... &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites sur place
         </div>
     </div>
 
     <div class="container">
-        <!-- Colonne Gauche -->
+        <!-- Colonne Gauche: OR -->
         <div class="column">
             <div class="table-wrapper">
-                <h2 class="gold-text">Cours de l'Or (Direct)</h2>
+                <h2 class="gold-text">Cours de l'Or (Spot CAD)</h2>
                 <table>
                     <thead>
                         <tr>
@@ -361,7 +297,7 @@
             </div>
         </div>
 
-        <!-- Centre -->
+        <!-- Centre: Logo et Titre -->
         <div class="center-column">
             <div class="sherbrook-promo">Monnaie et Jouets Sherbrook 819-780-3334</div>
             <div id="central-kiosk">Kiosque #17</div>
@@ -373,30 +309,12 @@
                 <div class="light light-blue"></div><div class="light light-red"></div>
                 <div class="light light-blue"></div><div class="light light-red"></div>
             </div>
-
-            <div class="bullion-display">
-                <div class="silver-column"></div>
-                <svg class="bars-icon" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="goldCoin" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#f1c40f"/><stop offset="50%" style="stop-color:#fffce1"/><stop offset="100%" style="stop-color:#d4af37"/>
-                        </linearGradient>
-                        <linearGradient id="silverCoin" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#bdc3c7"/><stop offset="50%" style="stop-color:#ffffff"/><stop offset="100%" style="stop-color:#7f8c8d"/>
-                        </linearGradient>
-                    </defs>
-                    <ellipse cx="40" cy="65" rx="25" ry="8" fill="#7f8c8d"/><ellipse cx="40" cy="60" rx="25" ry="8" fill="#95a5a6"/><ellipse cx="40" cy="55" rx="25" ry="8" fill="url(#silverCoin)" stroke="#7f8c8d"/><text x="40" y="57" font-size="5" fill="#5d6363" text-anchor="middle" font-weight="bold">FINE SILVER</text>
-                    <ellipse cx="80" cy="65" rx="25" ry="8" fill="#d4af37"/><ellipse cx="80" cy="60" rx="25" ry="8" fill="#f1c40f"/><ellipse cx="80" cy="55" rx="25" ry="8" fill="url(#goldCoin)" stroke="#d4af37"/><text x="80" y="57" font-size="5" fill="#9e7e12" text-anchor="middle" font-weight="bold">9999 GOLD</text>
-                    <circle cx="60" cy="35" r="22" fill="url(#silverCoin)" stroke="#7f8c8d" stroke-width="1"/><text x="60" y="38" font-size="12" fill="#5d6363" text-anchor="middle" font-weight="bold" opacity="0.3">$</text>
-                </svg>
-                <div class="silver-column"></div>
-            </div>
         </div>
 
-        <!-- Colonne Droite -->
+        <!-- Colonne Droite: ARGENT -->
         <div class="column">
             <div class="table-wrapper">
-                <h2 class="silver-text">Cours de l'Argent (Direct)</h2>
+                <h2 class="silver-text">Cours de l'Argent (Spot CAD)</h2>
                 <table>
                     <thead>
                         <tr>
@@ -437,94 +355,71 @@
     </div>
 
     <footer>
-        <div id="last-update">Mise à jour en cours...</div>
+        <div id="last-update">Initialisation des taux...</div>
         <div style="margin-top: 10px;">
-            <a href="https://www.kitco.com/charts/gold" target="_blank">Kitco Metals</a> | 
-            <a href="https://or.fr/cours/or/cad" target="_blank">Or.fr (CAD)</a> | 
-            <a href="https://ca.investing.com/currencies/xag-cad" target="_blank">Investing.com</a>
+            <a href="https://www.kitco.com/charts/gold" target="_blank" style="color: var(--hockey); text-decoration: none; margin: 0 10px;">Kitco Metals</a> | 
+            <a href="https://or.fr/cours/or/cad" target="_blank" style="color: var(--hockey); text-decoration: none; margin: 0 10px;">Or.fr (CAD)</a>
         </div>
     </footer>
 
     <script>
-        /**
-         * Script d'intégration des taux de métaux en direct
-         * Utilise un service de prix global avec conversion CAD.
-         */
-
         const ONCE_TO_GRAM = 31.1035;
-        const GOLD_PREMIUM = 1.015; // 1.5% premium pour Maple Leaf
-        const SILVER_PREMIUM = 1.05; // 5% premium pour Maple Leaf Argent
+        
+        // Vos valeurs de référence exactes
+        const BASE_GOLD_OZ = 6241.00;
+        const BASE_SILVER_OZ = 104.37;
 
-        async function fetchMetalPrices() {
-            try {
-                // Utilisation d'un agrégateur public fiable (exemple avec GoldPrice API via proxy CORS pour la démo)
-                // Note : Pour une mise en production réelle, un backend ou une clé API dédiée est recommandée.
-                // Ici on simule l'appel à or.fr / API publique stable.
-                const response = await fetch('https://api.gold-api.com/status'); // Statut API
-                
-                // Simulation réaliste basée sur les derniers marchés (fallback dynamique si API down)
-                // On utilise un proxy ou une source alternative stable
-                const prices = await getLiveMarketData();
+        // Primes pour pièces Maple Leaf (Ajustables selon vos marges)
+        const GOLD_MAPLE_PREMIUM = 0.04;   // +4% 
+        const SILVER_MAPLE_PREMIUM = 0.12; // +12%
 
-                updateUI(prices.gold, prices.silver);
-            } catch (error) {
-                console.error("Erreur de mise à jour :", error);
-                document.getElementById('last-update').innerText = "Erreur de connexion. Tentative de reconnexion...";
-            }
-        }
+        function updateMarketPrices() {
+            // Ici nous utilisons vos chiffres fixes comme base
+            const goldOz = BASE_GOLD_OZ;
+            const silverOz = BASE_SILVER_OZ;
 
-        async function getLiveMarketData() {
-            // Pour le Kiosque #17, nous utilisons un service qui agrège les données de Or.fr et Investing
-            // Ici, nous simulons la réponse de l'API avec des valeurs rafraîchies
-            // Dans un environnement réel, remplacez par : fetch('https://votre-api-metaux.com/live?base=CAD')
-            
-            // Simulation de variation de marché légère pour montrer que c'est vivant
-            const variation = () => (Math.random() * 2 - 1);
-            
-            return {
-                gold: 6275.70 + variation(),
-                silver: 100.14 + (variation() / 10)
-            };
-        }
-
-        function updateUI(goldOz, silverOz) {
+            // Calculs Grammes
             const goldGr = goldOz / ONCE_TO_GRAM;
             const silverGr = silverOz / ONCE_TO_GRAM;
-            const goldMaple = goldOz * GOLD_PREMIUM;
-            const silverMaple = silverOz * SILVER_PREMIUM;
 
-            // Mise à jour des textes
-            updateElement('gold-oz', goldOz.toLocaleString('fr-CA', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
-            updateElement('gold-gr', goldGr.toLocaleString('fr-CA', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
-            updateElement('gold-maple', goldMaple.toLocaleString('fr-CA', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+            // Calculs Maple Leaf
+            const goldMaple = goldOz * (1 + GOLD_MAPLE_PREMIUM);
+            const silverMaple = silverOz * (1 + SILVER_MAPLE_PREMIUM);
 
-            updateElement('silver-oz', silverOz.toLocaleString('fr-CA', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
-            updateElement('silver-gr', silverGr.toLocaleString('fr-CA', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
-            updateElement('silver-maple', silverMaple.toLocaleString('fr-CA', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+            // Formatage Monétaire
+            const format = (v) => v.toLocaleString('fr-CA', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-            // Mise à jour de la bannière
-            const tickerText = `✨ Marché en direct (CAD) : Or à ${goldOz.toFixed(2)} $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à ${silverOz.toFixed(2)} $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites sur place`;
-            document.getElementById('ticker').innerHTML = tickerText;
+            // Mise à jour Tables
+            updateField('gold-oz', format(goldOz));
+            updateField('gold-gr', format(goldGr));
+            updateField('gold-maple', format(goldMaple));
 
-            // Date de mise à jour
+            updateField('silver-oz', format(silverOz));
+            updateField('silver-gr', format(silverGr));
+            updateField('silver-maple', format(silverMaple));
+
+            // Mise à jour Bannière
+            document.getElementById('ticker').innerHTML = `✨ OR SPOT : ${format(goldOz)} $ &nbsp;&nbsp;&nbsp;&nbsp; ✨ ARGENT SPOT : ${format(silverOz)} $ &nbsp;&nbsp;&nbsp;&nbsp; ✨ ESTIMATION GRATUITE SUR PLACE &nbsp;&nbsp;&nbsp;&nbsp; ✨ NOUS ACHETONS TOUT TYPE DE MONNAIE`;
+
+            // Horodatage
             const now = new Date();
-            document.getElementById('last-update').innerText = `Dernière mise à jour : ${now.toLocaleDateString('fr-CA')} à ${now.toLocaleTimeString('fr-CA')}`;
+            document.getElementById('last-update').innerText = `Taux Marché fixés : ${format(goldOz)} $ (Or) / ${format(silverOz)} $ (Argent) — Mis à jour le ${now.toLocaleDateString('fr-CA')} à ${now.toLocaleTimeString('fr-CA')}`;
         }
 
-        function updateElement(id, value) {
+        function updateField(id, value) {
             const el = document.getElementById(id);
-            const current = el.innerText.split(' ')[0];
-            if (current !== value) {
+            if (el.innerText !== value) {
                 el.innerHTML = `${value} <span class="currency-tag">$</span>`;
                 el.classList.add('updating');
                 setTimeout(() => el.classList.remove('updating'), 1000);
             }
         }
 
-        // Démarrage et intervalle (toutes les 5 minutes)
+        // Démarrage
         window.onload = () => {
-            fetchMetalPrices();
-            setInterval(fetchMetalPrices, 300000); // 5 minutes
+            updateMarketPrices();
+            // Rafraîchissement optionnel si vous changez les valeurs dans le futur
+            setInterval(updateMarketPrices, 3600000); // 1h
         };
     </script>
 
