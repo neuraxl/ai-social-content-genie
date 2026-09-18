@@ -10,13 +10,11 @@
             --card-bg: rgba(30, 33, 37, 0.95);
             --border-color: #31363c;
             --gold: #f1c40f;
-            --gold-dark: #d4af37;
             --silver: #bdc3c7;
-            --silver-dark: #7f8c8d;
             --hockey: #00d2d3;
             --eval: #ff9f43;
             --red: #ff4757;
-            --blue: #3498db;
+            --police-blue: #0044ff;
             --text-main: #f1f2f6;
             --text-muted: #a4b0be;
             --card-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -35,11 +33,12 @@
             line-height: 1.5;
         }
 
+        /* Bande de défilement */
         .scrolling-banner {
             width: 100%;
             background-color: #000;
             border-bottom: 2px solid var(--border-color);
-            padding: 12px 0;
+            padding: 15px 0;
             overflow: hidden;
             position: sticky;
             top: 0;
@@ -51,8 +50,8 @@
             white-space: nowrap;
             padding-left: 100%;
             animation: scroll-left 25s linear infinite;
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.45rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #fff;
@@ -82,7 +81,7 @@
         .center-column {
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
             text-align: center;
             padding: 20px;
@@ -133,6 +132,10 @@
             font-size: 1rem;
         }
 
+        tr:last-child td {
+            border-bottom: none;
+        }
+
         .price {
             font-family: 'Monaco', 'Consolas', monospace;
             font-weight: 600;
@@ -140,14 +143,40 @@
             color: #fff;
         }
 
-        .price.updating {
-            animation: pricePulse 1s ease-in-out;
+        /* Gyrophare de police */
+        .police-spot {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        @keyframes pricePulse {
-            0% { color: #fff; }
-            50% { color: var(--gold); }
-            100% { color: #fff; }
+        .light {
+            width: 40px;
+            height: 20px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .blue-light {
+            background-color: var(--police-blue);
+            box-shadow: 0 0 20px var(--police-blue);
+            animation: flash-blue 0.4s infinite alternate;
+        }
+
+        .red-light {
+            background-color: var(--red);
+            box-shadow: 0 0 20px var(--red);
+            animation: flash-red 0.4s infinite alternate-reverse;
+        }
+
+        @keyframes flash-blue {
+            from { opacity: 0.2; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1.1); box-shadow: 0 0 40px var(--police-blue); }
+        }
+
+        @keyframes flash-red {
+            from { opacity: 0.2; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1.1); box-shadow: 0 0 40px var(--red); }
         }
 
         #central-kiosk {
@@ -197,75 +226,6 @@
         .hockey-text { color: var(--hockey); }
         .eval-text { color: var(--eval); }
 
-        .animated-gif-sim {
-            width: 240px;
-            height: 15px;
-            display: flex;
-            flex-direction: row;
-            gap: 5px;
-            margin-top: 25px;
-        }
-
-        .light {
-            flex: 1;
-            border-radius: 2px;
-            animation: flash 0.5s infinite alternate;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-        }
-
-        .light-red { background-color: var(--red); animation-delay: 0s; }
-        .light-blue { background-color: var(--blue); animation-delay: 0.25s; }
-
-        @keyframes flash {
-            from { opacity: 0.3; filter: brightness(0.8); }
-            to { opacity: 1; filter: brightness(1.6); box-shadow: 0 0 20px currentColor; }
-        }
-
-        .bullion-display {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 25px;
-        }
-
-        .silver-column {
-            width: 18px;
-            height: 80px;
-            background: linear-gradient(90deg, #7f8c8d, #bdc3c7, #7f8c8d);
-            position: relative;
-            border-radius: 2px;
-            box-shadow: 0 0 15px rgba(189, 195, 199, 0.3);
-        }
-
-        .silver-column::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: -4px;
-            width: 26px;
-            height: 8px;
-            background: #bdc3c7;
-            border-radius: 2px;
-        }
-
-        .silver-column::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: -4px;
-            width: 26px;
-            height: 8px;
-            background: #7f8c8d;
-            border-radius: 2px;
-        }
-
-        .bars-icon {
-            width: 110px;
-            height: 80px;
-            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
-        }
-
         footer {
             margin-top: auto;
             padding: 40px 20px;
@@ -276,55 +236,79 @@
             background: rgba(0,0,0,0.2);
         }
 
+        footer a {
+            color: var(--hockey);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
         @media (max-width: 1200px) {
-            .container { grid-template-columns: 1fr 1fr; }
-            .center-column { grid-column: span 2; order: -1; }
+            .container { 
+                grid-template-columns: 1fr 1fr;
+            }
+            .center-column {
+                grid-column: span 2;
+                order: -1;
+            }
         }
 
         @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; }
-            .center-column { grid-column: span 1; }
-            #central-kiosk { font-size: 3rem; }
+            .container { 
+                grid-template-columns: 1fr;
+            }
+            .center-column {
+                grid-column: span 1;
+            }
+            #central-kiosk {
+                font-size: 3rem;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="scrolling-banner">
-        <div id="ticker" class="scrolling-text">
-            Chargement des prix en direct... &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites sur place
+        <div class="scrolling-text">
+            ✨ Marché en direct (CAD) : Or à 6 122,30 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 92,67 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites au Kiosque 17
         </div>
     </div>
 
     <div class="container">
-        <!-- Colonne Gauche: OR -->
+        <!-- Colonne Gauche -->
         <div class="column">
+            <!-- Section Or -->
             <div class="table-wrapper">
                 <h2 class="gold-text">Cours de l'Or (Spot CAD)</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Unité (CAD)</th>
+                            <th>Unité</th>
                             <th style="text-align: right;">Prix</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Once Spot</td>
-                            <td class="price" id="gold-oz">--- <span class="currency-tag">$</span></td>
+                            <td class="price">6 122,30 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Gramme (24k)</td>
-                            <td class="price" id="gold-gr">--- <span class="currency-tag">$</span></td>
+                            <td class="price">196,84 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Maple Leaf (1 oz)</td>
-                            <td class="price" id="gold-maple">--- <span class="currency-tag">$</span></td>
+                            <td class="price">6 370,00 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             
+            <!-- Section Gradation Cartes RCG -->
             <div class="table-wrapper">
                 <h2 class="hockey-text">Gradation Cartes RCG</h2>
                 <table>
@@ -335,82 +319,82 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>RCG (Standard)</td><td class="price">15,00 <span class="currency-tag">$</span></td></tr>
-                        <tr><td>RCG (Express)</td><td class="price">35,00 <span class="currency-tag">$</span></td></tr>
+                        <tr>
+                            <td>RCG (Standard)</td>
+                            <td class="price">15,00 <span class="currency-tag">$</span></td>
+                        </tr>
+                        <tr>
+                            <td>RCG (Express)</td>
+                            <td class="price">30,00 <span class="currency-tag">$</span></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Centre: Logo et Titre -->
+        <!-- Centre -->
         <div class="center-column">
-            <div class="sherbrook-promo">Monnaie et Jouets Sherbrook 819-780-3334</div>
+            <!-- Spot Police -->
+            <div class="police-spot">
+                <div class="light blue-light"></div>
+                <div class="light red-light"></div>
+                <div class="light blue-light"></div>
+                <div class="light red-light"></div>
+            </div>
+            
             <div id="central-kiosk">Kiosque #17</div>
             <div class="location-info">Marché Jean-Talon, Québec</div>
             <div class="kiosk-sub">ACHAT • VENTE • ÉVALUATION</div>
-            
-            <div class="animated-gif-sim">
-                <div class="light light-blue"></div><div class="light light-red"></div>
-                <div class="light light-blue"></div><div class="light light-red"></div>
-                <div class="light light-blue"></div><div class="light light-red"></div>
-            </div>
-
-            <div class="bullion-display">
-                <div class="silver-column"></div>
-                <svg class="bars-icon" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="goldCoin" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#f1c40f"/><stop offset="50%" style="stop-color:#fffce1"/><stop offset="100%" style="stop-color:#d4af37"/>
-                        </linearGradient>
-                        <linearGradient id="silverCoin" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#bdc3c7"/><stop offset="50%" style="stop-color:#ffffff"/><stop offset="100%" style="stop-color:#7f8c8d"/>
-                        </linearGradient>
-                    </defs>
-                    <ellipse cx="40" cy="65" rx="25" ry="8" fill="#7f8c8d"/><ellipse cx="40" cy="60" rx="25" ry="8" fill="#95a5a6"/><ellipse cx="40" cy="55" rx="25" ry="8" fill="url(#silverCoin)" stroke="#7f8c8d"/><text x="40" y="57" font-size="5" fill="#5d6363" text-anchor="middle" font-weight="bold">FINE SILVER</text>
-                    <ellipse cx="80" cy="65" rx="25" ry="8" fill="#d4af37"/><ellipse cx="80" cy="60" rx="25" ry="8" fill="#f1c40f"/><ellipse cx="80" cy="55" rx="25" ry="8" fill="url(#goldCoin)" stroke="#d4af37"/><text x="80" y="57" font-size="5" fill="#9e7e12" text-anchor="middle" font-weight="bold">9999 GOLD</text>
-                    <circle cx="60" cy="35" r="22" fill="url(#silverCoin)" stroke="#7f8c8d" stroke-width="1"/><text x="60" y="38" font-size="12" fill="#5d6363" text-anchor="middle" font-weight="bold" opacity="0.3">$</text>
-                </svg>
-                <div class="silver-column"></div>
-            </div>
         </div>
 
-        <!-- Colonne Droite: ARGENT -->
+        <!-- Colonne Droite -->
         <div class="column">
+            <!-- Section Argent -->
             <div class="table-wrapper">
                 <h2 class="silver-text">Cours de l'Argent (Spot CAD)</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Unité (CAD)</th>
+                            <th>Unité</th>
                             <th style="text-align: right;">Prix</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Once Spot</td>
-                            <td class="price" id="silver-oz">--- <span class="currency-tag">$</span></td>
+                            <td class="price">92,67 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Gramme</td>
-                            <td class="price" id="silver-gr">--- <span class="currency-tag">$</span></td>
+                            <td class="price">2,98 <span class="currency-tag">$</span></td>
                         </tr>
                         <tr>
                             <td>Maple Leaf</td>
-                            <td class="price" id="silver-maple">--- <span class="currency-tag">$</span></td>
+                            <td class="price">101,75 <span class="currency-tag">$</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
+            <!-- Section Numismatique -->
             <div class="table-wrapper">
                 <h2 class="eval-text">Numismatique</h2>
                 <table>
                     <thead>
-                        <tr><th>Collection</th><th style="text-align: right;">Type</th></tr>
+                        <tr>
+                            <th>Collection</th>
+                            <th style="text-align: right;">Type</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Monnaie Argent</td><td class="price">80% pur</td></tr>
-                        <tr><td>Billets Rares</td><td class="price">Cdn / Int</td></tr>
+                        <tr>
+                            <td>Monnaie Argent</td>
+                            <td class="price">80% pur</td>
+                        </tr>
+                        <tr>
+                            <td>Billets Rares</td>
+                            <td class="price">Cdn / Int</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -418,71 +402,13 @@
     </div>
 
     <footer>
-        <div id="last-update">Initialisation des taux...</div>
+        <div>Données du 18 Septembre 2026. Sources de référence :</div>
         <div style="margin-top: 10px;">
-            <a href="https://www.kitco.com/charts/gold" target="_blank" style="color: var(--hockey); text-decoration: none; margin: 0 10px;">Kitco Metals</a> | 
-            <a href="https://or.fr/cours/or/cad" target="_blank" style="color: var(--hockey); text-decoration: none; margin: 0 10px;">Or.fr (CAD)</a>
+            <a href="https://www.kitco.com/charts/gold" target="_blank">Kitco Metals</a> | 
+            <a href="https://or.fr/cours/or/cad" target="_blank">Or.fr (CAD)</a> | 
+            <a href="https://ca.investing.com/currencies/xag-cad" target="_blank">Investing.com</a>
         </div>
     </footer>
-
-    <script>
-        const ONCE_TO_GRAM = 31.1035;
-        
-        // Vos valeurs de référence exactes mises à jour
-        const BASE_GOLD_OZ = 6035.00;
-        const BASE_SILVER_OZ = 94.56;
-
-        // Primes pour pièces Maple Leaf (Ajustables selon vos marges)
-        const GOLD_MAPLE_PREMIUM = 0.04;   // +4% 
-        const SILVER_MAPLE_PREMIUM = 0.12; // +12%
-
-        function updateMarketPrices() {
-            const goldOz = BASE_GOLD_OZ;
-            const silverOz = BASE_SILVER_OZ;
-
-            // Calculs Grammes
-            const goldGr = goldOz / ONCE_TO_GRAM;
-            const silverGr = silverOz / ONCE_TO_GRAM;
-
-            // Calculs Maple Leaf
-            const goldMaple = goldOz * (1 + GOLD_MAPLE_PREMIUM);
-            const silverMaple = silverOz * (1 + SILVER_MAPLE_PREMIUM);
-
-            // Formatage Monétaire
-            const format = (v) => v.toLocaleString('fr-CA', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-            // Mise à jour Tables
-            updateField('gold-oz', format(goldOz));
-            updateField('gold-gr', format(goldGr));
-            updateField('gold-maple', format(goldMaple));
-
-            updateField('silver-oz', format(silverOz));
-            updateField('silver-gr', format(silverGr));
-            updateField('silver-maple', format(silverMaple));
-
-            // Mise à jour Bannière
-            document.getElementById('ticker').innerHTML = `✨ OR SPOT : ${format(goldOz)} $ &nbsp;&nbsp;&nbsp;&nbsp; ✨ ARGENT SPOT : ${format(silverOz)} $ &nbsp;&nbsp;&nbsp;&nbsp; ✨ ESTIMATION GRATUITE SUR PLACE &nbsp;&nbsp;&nbsp;&nbsp; ✨ NOUS ACHETONS TOUT TYPE DE MONNAIE`;
-
-            // Horodatage
-            const now = new Date();
-            document.getElementById('last-update').innerText = `Taux Marché fixés : ${format(goldOz)} $ (Or) / ${format(silverOz)} $ (Argent) — Mis à jour le ${now.toLocaleDateString('fr-CA')} à ${now.toLocaleTimeString('fr-CA')}`;
-        }
-
-        function updateField(id, value) {
-            const el = document.getElementById(id);
-            if (el.innerText !== value) {
-                el.innerHTML = `${value} <span class="currency-tag">$</span>`;
-                el.classList.add('updating');
-                setTimeout(() => el.classList.remove('updating'), 1000);
-            }
-        }
-
-        // Démarrage
-        window.onload = () => {
-            updateMarketPrices();
-            setInterval(updateMarketPrices, 3600000); // 1h
-        };
-    </script>
 
 </body>
 </html>
