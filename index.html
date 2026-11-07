@@ -1,2 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosque #17 - Marché aux puces Jean-Talon</title>
+    <style>
+        :root {
+            --bg-color: #0f1113;
+            --card-bg: rgba(30, 33, 37, 0.95);
+            --border-color: #31363c;
+            --gold: #f1c40f;
+            --silver: #bdc3c7;
+            --hockey: #00d2d3;
+            --eval: #ff9f43;
+            --red: #ff4757;
+            --police-blue: #0044ff;
+            --text-main: #f1f2f6;
+            --text-muted: #a4b0be;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
 
-Je mets à jour les prix du Kiosque #17 avec les nouveaux tarifs demandés : **5 743,80 $** pour l'or et **73,39 $** pour l'argent, tout en recalculant automatiquement les valeurs associées (grammes et pièces Maple Leaf).
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        /* Bande de défilement */
+        .scrolling-banner {
+            width: 100%;
+            background-color: #000;
+            border-bottom: 2px solid var(--border-color);
+            padding: 15px 0;
+            overflow: hidden;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .scrolling-text {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: scroll-left 25s linear infinite;
+            font-size: 1.45rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #fff;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+            padding: 40px 20px;
+            align-items: stretch;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .center-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .table-wrapper {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .table-wrapper:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            margin: 0 0 20px 0;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        th {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 14px 10px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .price {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-weight: 600;
+            text-align: right;
+            color: #fff;
+        }
+
+        /* Gyrophare de police */
+        .police-spot {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .light {
+            width: 40px;
+            height: 20px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .blue-light {
+            background-color: var(--police-blue);
+            box-shadow: 0 0 20px var(--police-blue);
+            animation: flash-blue 0.4s infinite alternate;
+        }
+
+        .red-light {
+            background-color: var(--red);
+            box-shadow: 0 0 20px var(--red);
+            animation: flash-red 0.4s infinite alternate-reverse;
+        }
+
+        @keyframes flash-blue {
+            from { opacity: 0.2; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1.1); box-shadow: 0 0 40px var(--police-blue); }
+        }
+
+        @keyframes flash-red {
+            from { opacity: 0.2; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1.1); box-shadow: 0 0 40px var(--red); }
+        }
+
+        #central-kiosk {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--red);
+            text-transform: uppercase;
+            animation: blinker 1.2s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(255, 71, 87, 0.4);
+            line-height: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .location-info {
+            color: var(--text-main);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px dashed var(--border-color);
+        }
+
+        .kiosk-sub {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 20px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        @keyframes blinker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .currency-tag {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-left: 5px;
+        }
+
+        .gold-text { color: var(--gold); }
+        .silver-text { color: var(--silver); }
+        .hockey-text { color: var(--hockey); }
+        .eval-text { color: var(--eval); }
+
+        footer {
+            margin-top: auto;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-align: center;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+        }
+
+        footer a {
+            color: var(--hockey);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 1200px) {
+            .container { 
+                grid-template-columns: 1fr 1fr;
+            }
+            .center-column {
+                grid-column: span 2;
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container { 
+                grid-template-columns: 1fr;
+            }
+            .center-column {
+                grid-column: span 1;
+            }
+            #central-kiosk {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scrolling-banner">
+        <div class="scrolling-text">
+            ✨ Marché en direct (CAD) : Or à 5 743,80 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Argent à 73,39 $ / oz &nbsp;&nbsp;&nbsp;&nbsp; ✨ Nous achetons la Monnaie Royale Canadienne &nbsp;&nbsp;&nbsp;&nbsp; ✨ Évaluations gratuites au Kiosque 17
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Colonne Gauche -->
+        <div class="column">
+            <!-- Section Or -->
+            <div class="table-wrapper">
+                <h2 class="gold-text">Cours de l'Or (Spot CAD)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Unité</th>
+                            <th style="text-align: right;">Prix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Once Spot</td>
+                            <td class="price">5 743,80 <span class="currency-tag">$</span></td>
+                        </tr>
+                        <tr>
+                            <td>Gramme (24k)</td>
+                            <td class="price">184,67 <span class="currency-tag">$</span></td>
+                        </tr>
+                        <tr>
+                            <td>Maple Leaf (1 oz)</td>
+                            <td class="price">5 975,00 <span class="currency-tag">$</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Section Gradation Cartes RCG -->
+            <div class="table-wrapper">
+                <h2 class="hockey-text">Gradation Cartes RCG</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th style="text-align: right;">Frais</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>RCG (Standard)</td>
+                            <td class="price">15,00 <span class="currency-tag">$</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Centre -->
+        <div class="center-column">
+            <!-- Spot Police -->
+            <div class="police-spot">
+                <div class="light blue-light"></div>
+                <div class="light red-light"></div>
+                <div class="light blue-light"></div>
+                <div class="light red-light"></div>
+            </div>
+            
+            <div id="central-kiosk">Kiosque #17</div>
+            <div class="location-info">Marché Jean-Talon, Québec</div>
+            <div class="kiosk-sub">ACHAT • VENTE • ÉVALUATION</div>
+        </div>
+
+        <!-- Colonne Droite -->
+        <div class="column">
+            <!-- Section Argent -->
+            <div class="table-wrapper">
+                <h2 class="silver-text">Cours de l'Argent (Spot CAD)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Unité</th>
+                            <th style="text-align: right;">Prix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Once Spot</td>
+                            <td class="price">73,39 <span class="currency-tag">$</span></td>
+                        </tr>
+                        <tr>
+                            <td>Gramme</td>
+                            <td class="price">2,36 <span class="currency-tag">$</span></td>
+                        </tr>
+                        <tr>
+                            <td>Maple Leaf</td>
+                            <td class="price">80,50 <span class="currency-tag">$</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section Numismatique -->
+            <div class="table-wrapper">
+                <h2 class="eval-text">Numismatique</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Collection</th>
+                            <th style="text-align: right;">Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Monnaie Argent</td>
+                            <td class="price">80% pur</td>
+                        </tr>
+                        <tr>
+                            <td>Billets Rares</td>
+                            <td class="price">Cdn / Int</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div>Données du 7 Novembre 2026. Sources de référence :</div>
+        <div style="margin-top: 10px;">
+            <a href="https://www.kitco.com/charts/gold" target="_blank">Kitco Metals</a> | 
+            <a href="https://or.fr/cours/or/cad" target="_blank">Or.fr (CAD)</a> | 
+            <a href="https://ca.investing.com/currencies/xag-cad" target="_blank">Investing.com</a>
+        </div>
+    </footer>
+
+</body>
+</html>
